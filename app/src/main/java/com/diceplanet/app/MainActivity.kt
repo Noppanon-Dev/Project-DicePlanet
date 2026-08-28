@@ -1,4 +1,4 @@
-package com.example.projectdiceplanet
+package com.diceplanet.app
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
