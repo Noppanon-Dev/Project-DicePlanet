@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- ไฟล์สำหรับกำหนดข้อมูลและการตั้งค่าหลักของแอป -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- อนุญาตให้แอปใช้อินเทอร์เน็ต สำหรับเชื่อมต่อ API -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- ตั้งค่าหลักของแอป -->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,13 +16,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectDicePlanet">
+
+        <!-- Activity หลักของแอป -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
+
+            <!-- กำหนดให้ MainActivity เป็นหน้าเริ่มต้นของแอป -->
             <intent-filter>
+
+                <!-- จุดเริ่มต้นหลักของแอป -->
                 <action android:name="android.intent.action.MAIN" />
 
+                <!-- ให้เปิด MainActivity เมื่อกดไอคอนแอป -->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
