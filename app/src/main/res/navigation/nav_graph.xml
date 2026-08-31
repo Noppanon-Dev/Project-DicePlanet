@@ -13,11 +13,17 @@
         android:name="com.diceplanet.app.ui.home.HomeFragment"
         android:label="Home" />
 
-    <!--  Boardgame -->
+    <!-- Boardgame -->
     <fragment
         android:id="@+id/boardgameFragment"
         android:name="com.diceplanet.app.ui.boardgame.BoardgameFragment"
         android:label="Board Games" />
+
+    <!-- Board Game Detail -->
+    <fragment
+        android:id="@+id/boardgameDetailFragment"
+        android:name="com.diceplanet.app.ui.boardgame.BoardgameDetailFragment"
+        android:label="Board Game Detail" />
 
     <!-- Booking -->
     <fragment
