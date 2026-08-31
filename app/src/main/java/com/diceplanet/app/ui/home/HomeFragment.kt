@@ -59,5 +59,16 @@ class HomeFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        // หมวดหมู่ "ทั้งหมด"
+        val categoryAll = view.findViewById<View>(R.id.categoryAll)
+
+        categoryAll.setOnClickListener {
+            Toast.makeText(
+                requireContext(),
+                "หมวดหมู่: ทั้งหมด",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
