@@ -37,5 +37,27 @@ class HomeFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        // ปุ่ม "ดูทั้งหมด" ของหมวดหมู่บอร์ดเกม
+        val tvAllCategory = view.findViewById<TextView>(R.id.tvAllCategory)
+
+        tvAllCategory.setOnClickListener {
+            Toast.makeText(
+                requireContext(),
+                "หน้าหมวดหมู่บอร์ดเกมยังไม่ได้สร้าง",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        // ปุ่ม "ดูทั้งหมด" ของหมวดหมู่บอร์ดเกม
+        val tvAllGames = view.findViewById<TextView>(R.id.tvAllGames)
+
+        tvAllGames.setOnClickListener {
+            Toast.makeText(
+                requireContext(),
+                "หน้าเกมทั้งหมดยังไม่ได้สร้าง",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
