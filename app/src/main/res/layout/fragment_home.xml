@@ -1,17 +1,540 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Layout ของหน้า Home -->
-<FrameLayout
+<!-- Layout หลักของหน้า Home -->
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fillViewport="true">
 
-    <!-- ข้อความสำหรับทดสอบการแสดงผลของหน้า Home -->
-    <TextView
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Dice Planet Home"
-        android:textSize="24sp" />
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="42dp"
+        android:paddingBottom="12dp">
 
-</FrameLayout>
+        <!-- HEADER -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Logo ร้าน -->
+            <FrameLayout
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bg_logo_circle"
+                android:padding="2dp">
+
+                <ImageView
+                    android:id="@+id/imgLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:contentDescription="Dice Planet Logo"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/dice_planet_logo_nobg"
+                    android:translationY="4dp"/>
+
+            </FrameLayout>
+
+            <!-- Login -->
+            <TextView
+                android:id="@+id/tvLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:text="กรุณาเข้าสู่ระบบ"
+                android:textColor="#111111"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <!-- Notification -->
+            <ImageButton
+                android:id="@+id/btnNotification"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Notification"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_notification" />
+        </LinearLayout>
+
+
+        <!-- ANNOUNCEMENT / PROMOTION -->
+
+        <HorizontalScrollView
+            android:id="@+id/announcementScroll"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="24dp"
+            android:scrollbars="none"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <!-- ข่าวสารที่ 1 -->
+                <LinearLayout
+                    android:id="@+id/announcementCard1"
+                    android:layout_width="320dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_announcement"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="โปรโมชั่น"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvAnnouncement1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="โปรโมชั่นพิเศษสำหรับสมาชิก Dice Planet"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+
+                <!-- ข่าวสารที่ 2 -->
+                <LinearLayout
+                    android:id="@+id/announcementCard2"
+                    android:layout_width="320dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="12dp"
+                    android:background="@drawable/bg_announcement"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ข่าวสาร"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvAnnouncement2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="ข่าวสารและกิจกรรมใหม่จากร้าน"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+
+
+                <!-- ข่าวสารที่ 3 -->
+                <LinearLayout
+                    android:id="@+id/announcementCard3"
+                    android:layout_width="320dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_announcement"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="วันหยุดร้าน"
+                        android:textColor="#FFFFFF"
+                        android:textSize="17sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvAnnouncement3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="ตรวจสอบวันและเวลาทำการของร้าน"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- CATEGORY HEADER -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="หมวดหมู่บอร์ดเกม"
+                android:textColor="#111111"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAllCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ดูทั้งหมด"
+                android:textColor="#365CFF"
+                android:textSize="12sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <!-- CATEGORY LIST -->
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- ทั้งหมด -->
+                <LinearLayout
+                    android:id="@+id/categoryAll"
+                    android:layout_width="62dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <FrameLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_category_circle">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="หมวดหมู่ทั้งหมด"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/category_all"
+                            />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="ทั้งหมด"
+                        android:textColor="#333333"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <!-- ครอบครัว -->
+                <LinearLayout
+                    android:id="@+id/categoryFamily"
+                    android:layout_width="62dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <FrameLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_category_circle">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="หมวดหมู่ครอบครัว"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/category_family"
+                            app:tint="@color/blue"/>
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="ครอบครัว"
+                        android:textColor="#333333"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <!-- กลยุทธ์ -->
+                <LinearLayout
+                    android:id="@+id/categoryTactic"
+                    android:layout_width="62dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <FrameLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_category_circle">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="หมวดหมู่กลยุทธ์"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/category_tactical"
+                            app:tint="@color/yellow"
+                            />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="กลยุทธ์"
+                        android:textColor="#333333"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <!-- ปาร์ตี้ -->
+                <LinearLayout
+                    android:id="@+id/categoryParty"
+                    android:layout_width="62dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <FrameLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_category_circle">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="หมวดหมู่ปาร์ตี้"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/category_party"
+                            app:tint="@color/purple"
+                            />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="ปาร์ตี้"
+                        android:textColor="#333333"
+                        android:textSize="11sp" />
+                </LinearLayout>
+
+                <!-- 2คน -->
+                <LinearLayout
+                    android:id="@+id/categoryTwoPeople"
+                    android:layout_width="62dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <FrameLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_category_circle">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="หมวดหมู่2คน"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/category_twopeople"
+                            app:tint="@color/green"
+                            />
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="2คน"
+                        android:textColor="#333333"
+                        android:textSize="11sp"
+
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- RECOMMEND GAMES HEADER -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="เกมยอดนิยม"
+                android:textColor="#111111"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvAllGames"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ดูทั้งหมด"
+                android:textColor="#365CFF"
+                android:textSize="12sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <!-- RECOMMEND GAMES -->
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Game 1 -->
+                <LinearLayout
+                    android:id="@+id/gameCard1"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <View
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:background="#EEEEEE" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="เกมที่ 1"
+                        android:textColor="#222222"
+                        android:textSize="12sp"
+                        android:maxLines="1" />
+                </LinearLayout>
+
+                <!-- Game 2 -->
+                <LinearLayout
+                    android:id="@+id/gameCard2"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <View
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:background="#EEEEEE" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="เกมที่ 2"
+                        android:textColor="#222222"
+                        android:textSize="12sp"
+                        android:maxLines="1" />
+                </LinearLayout>
+
+                <!-- Game 3 -->
+                <LinearLayout
+                    android:id="@+id/gameCard3"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <View
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:background="#EEEEEE" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:text="เกมที่ 3"
+                        android:textColor="#222222"
+                        android:textSize="12sp"
+                        android:maxLines="1" />
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+</ScrollView>
