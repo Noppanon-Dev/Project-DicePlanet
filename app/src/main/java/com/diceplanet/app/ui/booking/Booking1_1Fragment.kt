@@ -47,6 +47,7 @@ class Booking1_1Fragment : Fragment() {
     private lateinit var btnStartTime: Button
     private lateinit var btnEndTime: Button
 
+
     // =====================================================
     // Icon
     // =====================================================
@@ -55,6 +56,7 @@ class Booking1_1Fragment : Fragment() {
     private lateinit var ivFullDay: ImageView
     private lateinit var ivFullDaySection: ImageView
     private lateinit var ivPriceTag: ImageView
+
 
     // =====================================================
     // ค่า
@@ -443,7 +445,6 @@ class Booking1_1Fragment : Fragment() {
         btnDecreasePlayer.setOnClickListener {
 
             // ห้ามต่ำกว่า 0
-
             if (playerCount > 0) {
 
                 playerCount--

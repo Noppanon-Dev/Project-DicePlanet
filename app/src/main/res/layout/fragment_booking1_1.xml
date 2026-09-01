@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:fillViewport="true">
 
     <LinearLayout
@@ -12,50 +13,51 @@
         android:orientation="vertical"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:paddingBottom="24dp">
+        android:paddingTop="50dp"
+        android:paddingBottom="20dp">
 
 
-        <!-- ================================================= -->
+        <!-- ========================= -->
         <!-- Header -->
-        <!-- ================================================= -->
+        <!-- ========================= -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="การจอง"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+            android:gravity="center_vertical">
 
             <ImageButton
                 android:id="@+id/btnBack"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="ย้อนกลับ"
-                android:padding="8dp"
-                android:src="@drawable/ic_back" />
+                android:padding="6dp"
+                android:src="@drawable/ic_arrow_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="จองโต๊ะ"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
 
-        <!-- ================================================= -->
+        <!-- ========================= -->
         <!-- Progress -->
-        <!-- ================================================= -->
+        <!-- ========================= -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
 
             <!-- Step 1 -->
 
@@ -90,11 +92,11 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:layout_weight="0.5"
-                android:layout_marginStart="-10dp"
-                android:layout_marginEnd="-10dp"
-                android:background="#33000000" />
+                android:layout_marginStart="-8dp"
+                android:layout_marginEnd="-8dp"
+                android:background="#D0D0D0" />
 
 
             <!-- Step 2 -->
@@ -129,11 +131,11 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:layout_weight="0.5"
-                android:layout_marginStart="-10dp"
-                android:layout_marginEnd="-10dp"
-                android:background="#33000000" />
+                android:layout_marginStart="-8dp"
+                android:layout_marginEnd="-8dp"
+                android:background="#D0D0D0" />
 
 
             <!-- Step 3 -->
@@ -142,6 +144,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_margin="0dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -166,77 +169,106 @@
         </LinearLayout>
 
 
-        <!-- ================================================= -->
+        <!-- ========================= -->
         <!-- เลือกวันที่ -->
-        <!-- ================================================= -->
+        <!-- ========================= -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="18dp"
             android:text="เลือกวันที่"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
-
 
         <CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_height="300dp"
+            android:layout_marginTop="4dp" />
 
 
         <!-- วันที่เลือก -->
 
-        <TextView
-            android:id="@+id/tvSelectedDate"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="ยังไม่ได้เลือกวันที่"
-            android:textSize="14sp" />
+            android:background="@drawable/bg_booking_option"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="วันที่เลือก"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvSelectedDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="-"
+                    android:textColor="#222222"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
-        <!-- ================================================= -->
+        <!-- ========================= -->
         <!-- รูปแบบการเล่น -->
-        <!-- ================================================= -->
+        <!-- ========================= -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="18dp"
             android:text="รูปแบบการเล่น"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
+
+        <!-- ตัวเลือก รายชั่วโมง / เหมาวัน -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
 
 
+            <!-- ========================= -->
             <!-- รายชั่วโมง -->
+            <!-- ========================= -->
 
             <LinearLayout
                 android:id="@+id/btnHourly"
                 android:layout_width="0dp"
-                android:layout_height="64dp"
+                android:layout_height="88dp"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_booking_option_selected"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/ivHourly"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginEnd="8dp"
                     android:contentDescription="รายชั่วโมง"
                     android:src="@drawable/ic_hourly" />
 
@@ -244,30 +276,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="รายชั่วโมง"
-                    android:textSize="14sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="คิดตามชั่วโมง"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
 
+            <!-- ========================= -->
             <!-- เหมาวัน -->
+            <!-- ========================= -->
 
             <LinearLayout
                 android:id="@+id/btnFullDay"
                 android:layout_width="0dp"
-                android:layout_height="64dp"
+                android:layout_height="88dp"
                 android:layout_marginStart="6dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_booking_option"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="8dp">
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/ivFullDay"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginEnd="8dp"
                     android:contentDescription="เหมาวัน"
                     android:src="@drawable/ic_full_day" />
 
@@ -275,131 +314,160 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="เหมาวัน"
-                    android:textSize="14sp"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15:00 - 22:00"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
         </LinearLayout>
 
 
-        <!-- ================================================= -->
-        <!-- Hourly Section -->
-        <!-- ================================================= -->
+        <!-- ========================= -->
+        <!-- Section รายชั่วโมง -->
+        <!-- ========================= -->
 
         <LinearLayout
             android:id="@+id/hourlySection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="เลือกเวลา"
-                android:textSize="18sp"
+                android:text="เลือกเวลาที่เข้าเล่น"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="เวลาเปิดร้าน 15:00 - 22:00"
+                android:textColor="#777777"
+                android:textSize="11sp" />
+
+
+            <!-- เวลาเริ่ม - สิ้นสุด -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal">
-
 
                 <Button
                     android:id="@+id/btnStartTime"
                     android:layout_width="0dp"
-                    android:layout_height="52dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:text="20:00" />
 
-
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_width="40dp"
+                    android:layout_height="48dp"
+                    android:gravity="center"
                     android:text="ถึง"
                     android:textSize="14sp" />
-
 
                 <Button
                     android:id="@+id/btnEndTime"
                     android:layout_width="0dp"
-                    android:layout_height="52dp"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:text="22:00" />
 
             </LinearLayout>
 
 
+            <!-- เวลาที่เลือก -->
+
             <TextView
                 android:id="@+id/tvSelectedTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:background="#D8FFD9"
+                android:padding="12dp"
                 android:text="เวลาที่เลือกคือ 20:00 - 22:00"
-                android:textSize="14sp"
+                android:textColor="#167A22"
+                android:textSize="13sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
 
-        <!-- ================================================= -->
-        <!-- Full Day Section -->
-        <!-- ================================================= -->
+        <!-- ========================= -->
+        <!-- Section เหมาวัน -->
+        <!-- ========================= -->
 
         <LinearLayout
             android:id="@+id/fullDaySection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:orientation="vertical"
             android:visibility="gone">
 
 
-            <!-- ข้อมูลเหมาวัน -->
+            <!-- ========================= -->
+            <!-- เหมาวัน Open - Close -->
+            <!-- ========================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_booking_full_day"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="12dp">
+                android:padding="14dp">
 
                 <ImageView
                     android:id="@+id/ivFullDaySection"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:padding="4dp"
                     android:contentDescription="เหมาวัน"
+                    android:padding="3dp"
                     android:src="@drawable/ic_full_day" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="เหมาทั้งวัน"
-                        android:textSize="16sp"
+                        android:text="เหมาวัน (Open - Close)"
+                        android:textColor="#111111"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="สามารถใช้โต๊ะได้ตลอดเวลาที่ร้านเปิด"
+                        android:layout_marginTop="3dp"
+                        android:text="เวลาให้บริการ 15:00 - 22:00 น."
+                        android:textColor="#111111"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="(รวม 8 ชั่วโมง)"
+                        android:textColor="#888888"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -407,97 +475,147 @@
             </LinearLayout>
 
 
-            <!-- ราคา -->
+            <!-- ========================= -->
+            <!-- ราคาเหมาวัน -->
+            <!-- ========================= -->
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="12dp">
+                android:background="@drawable/bg_booking_full_day"
+                android:padding="14dp">
 
+                <!-- ไอคอน อยู่ซ้าย -->
                 <ImageView
                     android:id="@+id/ivPriceTag"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:padding="4dp"
+                    android:layout_gravity="start|center_vertical"
                     android:contentDescription="ราคา"
+                    android:padding="3dp"
                     android:src="@drawable/ic_price_tag" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <!-- ข้อความ อยู่กลางกล่องจริง -->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="ราคาเหมาวัน"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ราคาเหมาวัน"
+                        android:textColor="#111111"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="149 บาท / คน"
+                        android:textColor="#7357FF"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="(รวมภาษีมูลค่าเพิ่มแล้ว)"
+                        android:textColor="#111111"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </FrameLayout>
 
         </LinearLayout>
 
 
-        <!-- ================================================= -->
-        <!-- จำนวนผู้เล่น -->
-        <!-- ================================================= -->
+        <!-- ========================= -->
+        <!-- จำนวนผู้เข้าร่วม -->
+        <!-- ========================= -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="จำนวนผู้เล่น"
-            android:textSize="18sp"
+            android:layout_marginTop="18dp"
+            android:text="จำนวนผู้เข้าร่วม"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
             android:orientation="horizontal">
 
+            <!-- ปุ่มลบ -->
 
             <Button
                 android:id="@+id/btnDecreasePlayer"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
+                android:layout_width="55dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_player_button"
+                android:gravity="center"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
                 android:text="−"
-                android:textSize="22sp" />
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
+
+            <!-- จำนวน -->
 
             <TextView
                 android:id="@+id/tvPlayerCount"
-                android:layout_width="60dp"
-                android:layout_height="52dp"
+                android:layout_width="70dp"
+                android:layout_height="48dp"
                 android:gravity="center"
                 android:text="0"
+                android:textColor="#111111"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
 
+            <!-- ปุ่มบวก -->
+
             <Button
                 android:id="@+id/btnIncreasePlayer"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
+                android:layout_width="55dp"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_player_button"
+                android:gravity="center"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
                 android:text="+"
-                android:textSize="22sp" />
+                android:textColor="@color/white"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
 
-        <!-- ================================================= -->
-        <!-- Next -->
-        <!-- ================================================= -->
+        <!-- ========================= -->
+        <!-- ปุ่มถัดไป -->
+        <!-- ========================= -->
 
         <Button
             android:id="@+id/btnNext"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginTop="28dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_booking_next"
             android:text="ถัดไป"
-            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
     </LinearLayout>
