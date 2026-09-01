@@ -2,7 +2,7 @@
 
     <!-- Theme พื้นฐานของแอป ใช้ Material 3 และรองรับ Light/Dark Mode -->
     <style name="Base.Theme.ProjectDicePlanet"
-        parent="Theme.Material3.DayNight.NoActionBar">
+        parent="Theme.Material3.Light.NoActionBar">
 
         <!-- สามารถกำหนดสี Font และรูปแบบต่าง ๆ ของแอปเพิ่มเติมได้ที่นี่ -->
 

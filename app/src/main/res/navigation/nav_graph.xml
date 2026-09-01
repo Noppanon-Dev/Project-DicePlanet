@@ -31,6 +31,11 @@
         android:name="com.diceplanet.app.ui.booking.BookingFragment"
         android:label="Booking" />
 
+    <fragment
+        android:id="@+id/booking1_1Fragment"
+        android:name="com.diceplanet.app.ui.booking.Booking1_1Fragment"
+        android:label="Booking 1.1" />
+
     <!-- Member -->
     <fragment
         android:id="@+id/memberFragment"
