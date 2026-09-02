@@ -62,6 +62,7 @@ class Booking1_1Fragment : Fragment() {
     // ค่า
     // =====================================================
 
+    private var selectedDate = ""
     private var playerCount = 0
 
     // เวลาเริ่มต้น
@@ -69,6 +70,8 @@ class Booking1_1Fragment : Fragment() {
 
     // เวลาสิ้นสุด
     private var endTime = "22:00"
+
+    private var playMode = "hourly"
 
 
     // =====================================================
@@ -97,8 +100,44 @@ class Booking1_1Fragment : Fragment() {
         view: View,
         savedInstanceState: Bundle?
     ) {
+        parentFragmentManager.setFragmentResultListener(
+            "booking1_2_result",
+            viewLifecycleOwner
+        ) { _, bundle ->
 
-        super.onViewCreated(view, savedInstanceState)
+            selectedDate = bundle.getString("selectedDate", selectedDate)
+            startTime = bundle.getString("startTime", startTime)
+            endTime = bundle.getString("endTime", endTime)
+            playerCount = bundle.getInt("playerCount", playerCount)
+            playMode = bundle.getString("playMode", playMode)
+
+            if (selectedDate.isNotEmpty()) {
+                tvSelectedDate.text = selectedDate
+
+                val parts = selectedDate.split("/")
+
+                if (parts.size == 3) {
+                    val day = parts[0].toInt()
+                    val month = parts[1].toInt() - 1
+                    val year = parts[2].toInt()
+
+                    val calendar = java.util.Calendar.getInstance()
+                    calendar.set(year, month, day)
+
+                    calendarView.date = calendar.timeInMillis
+                }
+            }
+
+            btnStartTime.text = startTime
+            btnEndTime.text = endTime
+            tvPlayerCount.text = playerCount.toString()
+        }
+
+        // รับค่าที่เคยกรอกไว้
+        selectedDate = arguments?.getString("selectedDate", "") ?: ""
+        playerCount = arguments?.getInt("playerCount", 0) ?: 0
+        startTime = arguments?.getString("startTime", "20:00") ?: "20:00"
+        endTime = arguments?.getString("endTime", "22:00") ?: "22:00"
 
 
         // =====================================================
@@ -168,6 +207,96 @@ class Booking1_1Fragment : Fragment() {
         ivPriceTag =
             view.findViewById(R.id.ivPriceTag)
 
+        parentFragmentManager.setFragmentResultListener(
+            "booking1_2_result",
+            viewLifecycleOwner
+        ) { _, bundle ->
+
+            selectedDate = bundle.getString("selectedDate", selectedDate)
+            startTime = bundle.getString("startTime", startTime)
+            endTime = bundle.getString("endTime", endTime)
+            playerCount = bundle.getInt("playerCount", playerCount)
+            playMode = bundle.getString("playMode", playMode)
+
+            if (selectedDate.isNotEmpty()) {
+                tvSelectedDate.text = selectedDate
+
+                val parts = selectedDate.split("/")
+
+                if (parts.size == 3) {
+                    val day = parts[0].toInt()
+                    val month = parts[1].toInt() - 1
+                    val year = parts[2].toInt()
+
+                    val calendar = java.util.Calendar.getInstance()
+                    calendar.set(year, month, day)
+
+                    calendarView.date = calendar.timeInMillis
+                }
+            }
+
+            btnStartTime.text = startTime
+            btnEndTime.text = endTime
+            tvPlayerCount.text = playerCount.toString()
+
+            if (playMode == "fullDay") {
+                btnFullDay.performClick()
+            } else {
+                btnHourly.performClick()
+            }
+        }
+
+        val savedDate = arguments?.getString("selectedDate")
+        val savedStartTime = arguments?.getString("startTime")
+        val savedEndTime = arguments?.getString("endTime")
+        val savedPlayerCount = arguments?.getInt("playerCount")
+        val savedPlayMode = arguments?.getString("playMode")
+
+        if (!savedPlayMode.isNullOrEmpty()) {
+            playMode = savedPlayMode
+
+            if (playMode == "hourly") {
+                btnHourly.performClick()
+            } else if (playMode == "fullDay") {
+                btnFullDay.performClick()
+            }
+        }
+
+        if (!savedDate.isNullOrEmpty()) {
+            selectedDate = savedDate
+            tvSelectedDate.text = selectedDate
+
+            val parts = savedDate.split("/")
+
+            if (parts.size == 3) {
+                val day = parts[0].toInt()
+                val month = parts[1].toInt() - 1
+                val year = parts[2].toInt()
+
+                val calendar = java.util.Calendar.getInstance()
+                calendar.set(year, month, day)
+
+                calendarView.date = calendar.timeInMillis
+            }
+        }
+
+        if (!savedStartTime.isNullOrEmpty()) {
+            startTime = savedStartTime
+            btnStartTime.text = startTime
+        }
+
+        if (!savedEndTime.isNullOrEmpty()) {
+            endTime = savedEndTime
+            btnEndTime.text = endTime
+        }
+
+        if (savedPlayerCount != null) {
+            playerCount = savedPlayerCount
+            tvPlayerCount.text = playerCount.toString()
+        }
+
+        tvSelectedTime.text = "เวลาที่เลือกคือ $startTime - $endTime"
+
 
         // =====================================================
         // สี Icon ของ Section เหมาวัน
@@ -197,14 +326,16 @@ class Booking1_1Fragment : Fragment() {
         // เลือกวันที่
         // =====================================================
 
-        calendarView.setOnDateChangeListener {
-                _,
-                year,
-                month,
-                dayOfMonth ->
+        calendarView.setOnDateChangeListener { _,
+                                               year,
+                                               month,
+                                               dayOfMonth ->
+
+            selectedDate =
+                "$dayOfMonth/${month + 1}/$year"
 
             tvSelectedDate.text =
-                "$dayOfMonth/${month + 1}/$year"
+                selectedDate
         }
 
 
@@ -221,6 +352,8 @@ class Booking1_1Fragment : Fragment() {
             // ซ่อน Section เหมาวัน
             fullDaySection.visibility =
                 View.GONE
+
+            playMode = "hourly"
 
 
             // อัปเดตเวลา
@@ -269,6 +402,8 @@ class Booking1_1Fragment : Fragment() {
             // แสดง Section เหมาวัน
             fullDaySection.visibility =
                 View.VISIBLE
+
+            playMode = "fullDay"
 
 
             // เปลี่ยนข้อความ
@@ -485,23 +620,33 @@ class Booking1_1Fragment : Fragment() {
 
         btnNext.setOnClickListener {
 
-            /*
-             * ตอนนี้ยังไม่เชื่อม Booking 1.2
-             *
-             * ข้อมูลที่จะส่งต่อ:
-             *
-             * selectedDate
-             * startTime
-             * endTime
-             * playerCount
-             * รูปแบบการเล่น
-             */
+            // ตรวจวันที่
+            if (selectedDate.isEmpty()) {
+                tvSelectedDate.error = "กรุณาเลือกวันที่"
+                tvSelectedDate.requestFocus()
+                return@setOnClickListener
+            }
 
-            // TODO:
-            //
-            // findNavController().navigate(
-            //     R.id.action_booking1_1_to_booking1_2
-            // )
+            // ตรวจจำนวนคน
+            if (playerCount <= 0) {
+                tvPlayerCount.error = "กรุณาระบุจำนวนผู้เล่น"
+                tvPlayerCount.requestFocus()
+                return@setOnClickListener
+            }
+
+            // ถ้าข้อมูลครบ → ไปหน้าเลือกโต๊ะ
+            val bundle = Bundle().apply {
+                putString("selectedDate", selectedDate)
+                putString("startTime", startTime)
+                putString("endTime", endTime)
+                putInt("playerCount", playerCount)
+                putString("playMode", playMode)
+            }
+
+            findNavController().navigate(
+                R.id.booking1_2Fragment,
+                bundle
+            )
         }
 
 
@@ -509,13 +654,8 @@ class Booking1_1Fragment : Fragment() {
         // ค่าเริ่มต้น
         // =====================================================
 
-        tvPlayerCount.text =
-            "0"
-
-
         btnStartTime.text =
             startTime
-
 
         btnEndTime.text =
             endTime
@@ -525,46 +665,15 @@ class Booking1_1Fragment : Fragment() {
         // เริ่มต้นเป็น "รายชั่วโมง"
         // =====================================================
 
-        hourlySection.visibility =
-            View.VISIBLE
+        if (playMode == "fullDay") {
 
-        fullDaySection.visibility =
-            View.GONE
+            btnFullDay.performClick()
 
+        } else {
 
-        tvSelectedTime.visibility =
-            View.VISIBLE
-
-
-        btnHourly.setBackgroundResource(
-            R.drawable.bg_booking_option_selected
-        )
-
-        btnFullDay.setBackgroundResource(
-            R.drawable.bg_booking_option
-        )
-
-
-        // =====================================================
-        // สี Icon ตอนเปิดหน้าครั้งแรก
-        // =====================================================
-
-        ivHourly.setColorFilter(
-            ContextCompat.getColor(
-                requireContext(),
-                R.color.purple
-            )
-        )
-
-        ivFullDay.setColorFilter(
-            Color.BLACK
-        )
-
-
-        // อัปเดตเวลา
-        updateSelectedTime()
+            btnHourly.performClick()
+        }
     }
-
 
     // =====================================================
     // อัปเดตข้อความเวลาที่เลือก

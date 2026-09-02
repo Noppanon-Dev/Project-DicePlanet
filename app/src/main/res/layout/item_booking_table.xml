@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableItem"
+    android:layout_width="90dp"
+    android:layout_height="72dp"
+    android:layout_margin="6dp"
+    android:background="@drawable/bg_status_available"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="6dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/tvTableName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A1"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvTableCapacity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="2 - 4 คน"
+        android:textColor="#555555"
+        android:textSize="11sp" />
+
+</LinearLayout>

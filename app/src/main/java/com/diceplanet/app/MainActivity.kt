@@ -1,10 +1,10 @@
 package com.diceplanet.app
 
-import android.os.Bundle //เรียกของที่ Android ใช้ตอนเปิดหรือสร้างหน้านี้
-import androidx.appcompat.app.AppCompatActivity //เรียกตัวที่ใช้สร้างหน้า Activity ของแอป
-import androidx.navigation.fragment.NavHostFragment //เรียกตัวที่ใช้เป็นพื้นที่สำหรับแสดงหน้า Fragment ต่างๆตามที่กำหนดไว้ใน nav_graph.xml
-import androidx.navigation.ui.setupWithNavController //เรียกตัวช่วยที่เอาไว้เชื่อมปุ่ม Bottom Nav กับระบบเปลี่ยนหน้า
-import com.google.android.material.bottomnavigation.BottomNavigationView //เรียกตัว Bottom Navigation ที่อยู่ด้านล่างของแอป
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 // หน้าหลักของแอป ใช้ควบคุมการเปลี่ยนหน้าและ Bottom Navigation
 class MainActivity : AppCompatActivity() {
@@ -30,5 +30,21 @@ class MainActivity : AppCompatActivity() {
 
         // เชื่อม Bottom Navigation กับระบบเปลี่ยนหน้า
         bottomNavigation.setupWithNavController(navController)
+
+        // กำหนดให้หน้าภายใน Booking ยังคงเลือกปุ่ม Booking
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+
+            when (destination.id) {
+
+                R.id.bookingFragment,
+                R.id.booking1_1Fragment,
+                R.id.booking1_2Fragment -> {
+
+                    bottomNavigation.menu
+                        .findItem(R.id.bookingFragment)
+                        .isChecked = true
+                }
+            }
+        }
     }
 }
