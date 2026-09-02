@@ -16,7 +16,6 @@
         android:paddingTop="50dp"
         android:paddingBottom="20dp">
 
-
         <!-- ========================= -->
         <!-- Header -->
         <!-- ========================= -->
@@ -46,7 +45,6 @@
 
         </LinearLayout>
 
-
         <!-- ========================= -->
         <!-- Progress -->
         <!-- ========================= -->
@@ -57,7 +55,6 @@
             android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-
 
             <!-- Step 1 -->
 
@@ -82,11 +79,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="เลือกวันที่/เวลา"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-
 
             <!-- เส้น 1 → 2 -->
 
@@ -97,7 +93,6 @@
                 android:layout_marginStart="-8dp"
                 android:layout_marginEnd="-8dp"
                 android:background="#D0D0D0" />
-
 
             <!-- Step 2 -->
 
@@ -122,10 +117,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="เลือกโต๊ะ"
-                    android:textSize="10sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
-
 
             <!-- เส้น 2 → 3 -->
 
@@ -136,7 +130,6 @@
                 android:layout_marginStart="-8dp"
                 android:layout_marginEnd="-8dp"
                 android:background="#D0D0D0" />
-
 
             <!-- Step 3 -->
 
@@ -162,12 +155,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="ยืนยันการจอง"
-                    android:textSize="10sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
         </LinearLayout>
-
 
         <!-- ========================= -->
         <!-- เลือกวันที่ -->
@@ -187,7 +179,6 @@
             android:layout_height="300dp"
             android:layout_marginTop="4dp" />
 
-
         <!-- วันที่เลือก -->
 
         <LinearLayout
@@ -195,37 +186,29 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_booking_option"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="12dp">
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:text="วันที่เลือก"
+                android:textSize="11sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="วันที่เลือก"
-                    android:textSize="11sp" />
-
-                <TextView
-                    android:id="@+id/tvSelectedDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="-"
-                    android:textColor="#222222"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tvSelectedDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="-"
+                android:textColor="#222222"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
-
 
         <!-- ========================= -->
         <!-- รูปแบบการเล่น -->
@@ -239,15 +222,14 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-
         <!-- ตัวเลือก รายชั่วโมง / เหมาวัน -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <!-- ========================= -->
             <!-- รายชั่วโมง -->
@@ -282,10 +264,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="คิดตามชั่วโมง"
-                    android:textSize="10sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
-
 
             <!-- ========================= -->
             <!-- เหมาวัน -->
@@ -320,12 +301,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="15:00 - 22:00"
-                    android:textSize="10sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
         </LinearLayout>
-
 
         <!-- ========================= -->
         <!-- Section รายชั่วโมง -->
@@ -353,7 +333,6 @@
                 android:text="เวลาเปิดร้าน 15:00 - 22:00"
                 android:textColor="#777777"
                 android:textSize="11sp" />
-
 
             <!-- เวลาเริ่ม - สิ้นสุด -->
 
@@ -386,7 +365,6 @@
 
             </LinearLayout>
 
-
             <!-- เวลาที่เลือก -->
 
             <TextView
@@ -403,7 +381,6 @@
 
         </LinearLayout>
 
-
         <!-- ========================= -->
         <!-- Section เหมาวัน -->
         <!-- ========================= -->
@@ -415,7 +392,6 @@
             android:layout_marginTop="16dp"
             android:orientation="vertical"
             android:visibility="gone">
-
 
             <!-- ========================= -->
             <!-- เหมาวัน Open - Close -->
@@ -473,7 +449,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
 
             <!-- ========================= -->
             <!-- ราคาเหมาวัน -->
@@ -534,7 +509,6 @@
 
         </LinearLayout>
 
-
         <!-- ========================= -->
         <!-- จำนวนผู้เข้าร่วม -->
         <!-- ========================= -->
@@ -546,7 +520,6 @@
             android:text="จำนวนผู้เข้าร่วม"
             android:textSize="14sp"
             android:textStyle="bold" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -570,7 +543,6 @@
                 android:textColor="@color/white"
                 android:textSize="20sp" />
 
-
             <!-- จำนวน -->
 
             <TextView
@@ -582,7 +554,6 @@
                 android:textColor="#111111"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
 
             <!-- ปุ่มบวก -->
 
@@ -600,7 +571,6 @@
                 android:textSize="20sp" />
 
         </LinearLayout>
-
 
         <!-- ========================= -->
         <!-- ปุ่มถัดไป -->

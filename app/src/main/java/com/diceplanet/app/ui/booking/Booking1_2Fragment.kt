@@ -205,8 +205,7 @@ class Booking1_2Fragment : Fragment() {
 
             // ตรวจจำนวนผู้เล่น
             val canSelect =
-                playerCount >= minPlayers &&
-                        playerCount <= maxPlayers
+                playerCount in minPlayers..maxPlayers
 
             if (!canSelect) {
 

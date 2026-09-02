@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Theme พื้นฐานของแอป ใช้ Material 3 และรองรับ Light/Dark Mode -->
     <style name="Base.Theme.ProjectDicePlanet"

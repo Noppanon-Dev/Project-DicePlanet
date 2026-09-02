@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.graphics.Color
+import java.util.Locale
 
 import android.widget.Button
 import android.widget.CalendarView
@@ -206,45 +207,6 @@ class Booking1_1Fragment : Fragment() {
 
         ivPriceTag =
             view.findViewById(R.id.ivPriceTag)
-
-        parentFragmentManager.setFragmentResultListener(
-            "booking1_2_result",
-            viewLifecycleOwner
-        ) { _, bundle ->
-
-            selectedDate = bundle.getString("selectedDate", selectedDate)
-            startTime = bundle.getString("startTime", startTime)
-            endTime = bundle.getString("endTime", endTime)
-            playerCount = bundle.getInt("playerCount", playerCount)
-            playMode = bundle.getString("playMode", playMode)
-
-            if (selectedDate.isNotEmpty()) {
-                tvSelectedDate.text = selectedDate
-
-                val parts = selectedDate.split("/")
-
-                if (parts.size == 3) {
-                    val day = parts[0].toInt()
-                    val month = parts[1].toInt() - 1
-                    val year = parts[2].toInt()
-
-                    val calendar = java.util.Calendar.getInstance()
-                    calendar.set(year, month, day)
-
-                    calendarView.date = calendar.timeInMillis
-                }
-            }
-
-            btnStartTime.text = startTime
-            btnEndTime.text = endTime
-            tvPlayerCount.text = playerCount.toString()
-
-            if (playMode == "fullDay") {
-                btnFullDay.performClick()
-            } else {
-                btnHourly.performClick()
-            }
-        }
 
         val savedDate = arguments?.getString("selectedDate")
         val savedStartTime = arguments?.getString("startTime")
@@ -497,6 +459,7 @@ class Booking1_1Fragment : Fragment() {
 
                         endTime =
                             String.format(
+                                Locale.US,
                                 "%02d:00",
                                 startHour + 1
                             )
@@ -543,6 +506,7 @@ class Booking1_1Fragment : Fragment() {
 
                 endTimes.add(
                     String.format(
+                        Locale.US,
                         "%02d:00",
                         hour
                     )
