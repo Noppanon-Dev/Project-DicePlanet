@@ -20,9 +20,11 @@ class BoardgameFragment : Fragment() {
     private lateinit var etSearch: EditText
     private lateinit var tvGameCount: TextView
     private lateinit var tvSort: TextView
+    private lateinit var tvCategoryFilter: TextView
     private lateinit var boardgameAdapter: BoardgameAdapter
 
     // รูปแบบการเรียงเริ่มต้น
+    private var currentCategory = "ทั้งหมด"
     private var currentSort = "ความนิยม"
 
     override fun onCreateView(
@@ -45,15 +47,20 @@ class BoardgameFragment : Fragment() {
         val keyword = etSearch.text.toString().trim()
 
         // กรองเกมจากชื่อ
-        val filteredList = if (keyword.isEmpty()) {
-            gameList
-        } else {
-            gameList.filter { game ->
-                game.name.contains(
-                    keyword,
-                    ignoreCase = true
-                )
-            }
+        val filteredList = gameList.filter { game ->
+
+            val matchSearch =
+                keyword.isEmpty() ||
+                        game.name.contains(
+                            keyword,
+                            ignoreCase = true
+                        )
+
+            val matchCategory =
+                currentCategory == "ทั้งหมด" ||
+                        game.category == currentCategory
+
+            matchSearch && matchCategory
         }
 
         // เรียงตามตัวเลือก
@@ -115,6 +122,9 @@ class BoardgameFragment : Fragment() {
 
         tvSort =
             view.findViewById(R.id.tvSort)
+
+        tvCategoryFilter =
+            view.findViewById(R.id.tvCategoryFilter)
 
         // RecyclerView เรียง Card แนวตั้ง
         recyclerBoardgame.layoutManager =
@@ -214,6 +224,32 @@ class BoardgameFragment : Fragment() {
                     "${currentSort}  ▾"
 
                 // กรอง + เรียงใหม่
+                updateGameList(gameList)
+
+                true
+            }
+
+            popup.show()
+        }
+
+        tvCategoryFilter.setOnClickListener {
+
+            val popup = PopupMenu(
+                requireContext(),
+                tvCategoryFilter
+            )
+
+            popup.menu.add("ทั้งหมด")
+            popup.menu.add("ปาร์ตี้")
+            popup.menu.add("วางแผน")
+            popup.menu.add("เล่าเรื่อง")
+
+            popup.setOnMenuItemClickListener { item ->
+
+                currentCategory = item.title.toString()
+
+                tvCategoryFilter.text = "☷"
+
                 updateGameList(gameList)
 
                 true
