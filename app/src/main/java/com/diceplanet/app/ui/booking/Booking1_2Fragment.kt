@@ -94,6 +94,53 @@ class Booking1_2Fragment : Fragment() {
 
             findNavController().popBackStack()
         }
+
+
+// ปุ่มถัดไป
+        view.findViewById<View>(R.id.btnNext).setOnClickListener {
+
+            // ต้องเลือกโต๊ะก่อน
+            if (selectedTable == null) {
+                return@setOnClickListener
+            }
+
+            val bundle = Bundle().apply {
+                putString(
+                    "selectedDate",
+                    arguments?.getString("selectedDate", "") ?: ""
+                )
+
+                putString(
+                    "startTime",
+                    arguments?.getString("startTime", "20:00") ?: "20:00"
+                )
+
+                putString(
+                    "endTime",
+                    arguments?.getString("endTime", "22:00") ?: "22:00"
+                )
+
+                putInt(
+                    "playerCount",
+                    playerCount
+                )
+
+                putString(
+                    "playMode",
+                    playMode
+                )
+
+                putString(
+                    "selectedTable",
+                    selectedTable?.findViewById<TextView>(R.id.tvTableName)?.text?.toString() ?: ""
+                )
+            }
+
+            findNavController().navigate(
+                R.id.booking1_3Fragment,
+                bundle
+            )
+        }
     }
 
     private fun createTables() {

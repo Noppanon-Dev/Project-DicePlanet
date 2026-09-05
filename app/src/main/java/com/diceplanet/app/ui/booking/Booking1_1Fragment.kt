@@ -137,7 +137,7 @@ class Booking1_1Fragment : Fragment() {
         // รับค่าที่เคยกรอกไว้
         selectedDate = arguments?.getString("selectedDate", "") ?: ""
         playerCount = arguments?.getInt("playerCount", 0) ?: 0
-        startTime = arguments?.getString("startTime", "20:00") ?: "20:00"
+        startTime = arguments?.getString("startTime", "15:00") ?: "15:00"
         endTime = arguments?.getString("endTime", "22:00") ?: "22:00"
 
 

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- ==================== CONTENT ==================== -->
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnBackHome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="55dp"
+            android:paddingBottom="30dp">
+
+            <!-- ==================== TOP DECORATION ==================== -->
+
+            <ImageView
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_marginTop="5dp"
+                android:contentDescription="ตกแต่ง"
+                android:scaleType="centerInside"
+                android:src="@drawable/dice_planet_logo_nobg" />
+
+            <!-- ==================== SUCCESS ICON ==================== -->
+
+            <TextView
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_success_circle"
+                android:gravity="center"
+                android:text="✓"
+                android:textColor="@android:color/white"
+                android:textSize="72sp"
+                android:textStyle="bold" />
+
+            <!-- ==================== TITLE ==================== -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="จองสำเร็จ!"
+                android:textColor="@android:color/black"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <!-- ==================== DESCRIPTION ==================== -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:lineSpacingExtra="3dp"
+                android:text="เราได้ทำการจองโต๊ะของคุณเรียบร้อยแล้ว&#10;และพบกับที่ Dice Planet นะครับ"
+                android:textColor="#777777"
+                android:textSize="13sp" />
+
+            <!-- ==================== BOOKING NUMBER ==================== -->
+
+            <LinearLayout
+                android:layout_width="188dp"
+                android:layout_height="78dp"
+                android:layout_marginTop="42dp"
+                android:background="@drawable/bg_booking_number"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="หมายเลขการจอง"
+                    android:textColor="#999999"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvBookingId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="#DP00000000000"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- ==================== FIXED BACK HOME BUTTON ==================== -->
+
+    <Button
+        android:id="@+id/btnBackHome"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/bg_booking_next"
+        android:text="กลับหน้าหลัก"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
