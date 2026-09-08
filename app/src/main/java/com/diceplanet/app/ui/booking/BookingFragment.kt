@@ -1,11 +1,15 @@
 package com.diceplanet.app.ui.booking
 
 import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -43,98 +47,215 @@ class BookingFragment : Fragment() {
             findNavController().navigate(R.id.booking1_1Fragment)
         }
 
+        val tvBookingFilter =
+            view.findViewById<TextView>(R.id.tvBookingFilter)
+
+        tvBookingFilter.setOnClickListener {
+            showBookingFilter(tvBookingFilter)
+        }
+
         showCurrentBooking()
     }
 
-    private fun showCurrentBooking() {
+    // =========================
+    // FILTER
+    // =========================
+
+    private fun showBookingFilter(filterView: TextView) {
+
+        val popupMenu = PopupMenu(
+            requireContext(),
+            filterView
+        )
+
+        popupMenu.menu.add("ทั้งหมด")
+        popupMenu.menu.add("รอการยืนยัน")
+        popupMenu.menu.add("ยืนยันแล้ว")
+        popupMenu.menu.add("ยกเลิกแล้ว")
+
+        popupMenu.setOnMenuItemClickListener { item ->
+
+            filterView.text = "${item.title} ⌄"
+
+            showCurrentBooking(
+                item.title.toString()
+            )
+
+            true
+        }
+
+        popupMenu.show()
+    }
+
+    // =========================
+    // SHOW BOOKING
+    // =========================
+
+    private fun showCurrentBooking(
+        filter: String = "ทั้งหมด"
+    ) {
 
         bookingContainer.removeAllViews()
 
         val booking = BookingManager.currentBooking
 
-        if (booking == null) {
-            val tvNoBooking = TextView(requireContext())
+        val filteredBooking = when (filter) {
+
+            "ทั้งหมด" -> booking
+
+            else -> {
+                if (booking?.status == filter) {
+                    booking
+                } else {
+                    null
+                }
+            }
+        }
+
+        // ไม่มีการจอง
+        if (filteredBooking == null) {
+
+            val tvNoBooking =
+                TextView(requireContext())
 
             tvNoBooking.text = "ยังไม่มีการจอง"
             tvNoBooking.textSize = 24f
+
             tvNoBooking.setTextColor(
-                android.graphics.Color.parseColor("#777777")
+                Color.parseColor("#777777")
             )
-            tvNoBooking.setTypeface(null, android.graphics.Typeface.BOLD)
 
-            tvNoBooking.gravity = android.view.Gravity.CENTER
+            tvNoBooking.setTypeface(
+                null,
+                Typeface.BOLD
+            )
 
-            bookingContainer.addView(tvNoBooking)
+            tvNoBooking.gravity =
+                Gravity.CENTER
+
+            bookingContainer.addView(
+                tvNoBooking
+            )
 
             return
         }
 
-        val bookingView = LayoutInflater.from(requireContext())
-            .inflate(
-                R.layout.item_booking,
-                bookingContainer,
-                false
-            )
+        // =========================
+        // BOOKING CARD
+        // =========================
+
+        val bookingView =
+            LayoutInflater.from(requireContext())
+                .inflate(
+                    R.layout.item_booking,
+                    bookingContainer,
+                    false
+                )
 
         val tvBookingId =
-            bookingView.findViewById<TextView>(R.id.tvBookingId)
+            bookingView.findViewById<TextView>(
+                R.id.tvBookingId
+            )
 
         val tvBookingStatus =
-            bookingView.findViewById<TextView>(R.id.tvBookingStatus)
+            bookingView.findViewById<TextView>(
+                R.id.tvBookingStatus
+            )
 
         val tvBookingDate =
-            bookingView.findViewById<TextView>(R.id.tvBookingDate)
+            bookingView.findViewById<TextView>(
+                R.id.tvBookingDate
+            )
 
         val tvBookingTime =
-            bookingView.findViewById<TextView>(R.id.tvBookingTime)
+            bookingView.findViewById<TextView>(
+                R.id.tvBookingTime
+            )
 
         val tvBookingTable =
-            bookingView.findViewById<TextView>(R.id.tvBookingTable)
+            bookingView.findViewById<TextView>(
+                R.id.tvBookingTable
+            )
 
         val tvBookingGame =
-            bookingView.findViewById<TextView>(R.id.tvBookingGame)
+            bookingView.findViewById<TextView>(
+                R.id.tvBookingGame
+            )
 
         val tvBookingPlayers =
-            bookingView.findViewById<TextView>(R.id.tvBookingPlayers)
+            bookingView.findViewById<TextView>(
+                R.id.tvBookingPlayers
+            )
 
         val btnViewBooking =
-            bookingView.findViewById<TextView>(R.id.btnViewBooking)
+            bookingView.findViewById<TextView>(
+                R.id.btnViewBooking
+            )
 
         val btnCancelBooking =
-            bookingView.findViewById<TextView>(R.id.btnCancelBooking)
+            bookingView.findViewById<TextView>(
+                R.id.btnCancelBooking
+            )
 
-        tvBookingId.text = booking.bookingId
-        tvBookingStatus.text = booking.status
+        // =========================
+        // ใส่ข้อมูล
+        // =========================
+
+        tvBookingId.text =
+            filteredBooking.bookingId
+
+        tvBookingStatus.text =
+            filteredBooking.status
 
         tvBookingDate.text =
-            formatDate(booking.selectedDate)
+            formatDate(
+                filteredBooking.selectedDate
+            )
 
         tvBookingTime.text =
-            "${booking.startTime} - ${booking.endTime}"
+            "${filteredBooking.startTime} - ${filteredBooking.endTime}"
 
         tvBookingTable.text =
-            if (booking.selectedTable.startsWith("A")) {
-                "ชั้น 1 - ${booking.selectedTable}"
+            if (filteredBooking.selectedTable.startsWith("A")) {
+                "ชั้น 1 - ${filteredBooking.selectedTable}"
             } else {
-                "ชั้น 2 - ${booking.selectedTable}"
+                "ชั้น 2 - ${filteredBooking.selectedTable}"
             }
 
         tvBookingGame.text =
-            "เกม: ${booking.gameName}"
+            "เกม: ${filteredBooking.gameName}"
 
         tvBookingPlayers.text =
-            "จำนวนผู้เล่น: ${booking.playerCount} คน"
+            "จำนวนผู้เล่น: ${filteredBooking.playerCount} คน"
+
+        // =========================
+        // ดูรายละเอียด
+        // =========================
 
         btnViewBooking.setOnClickListener {
-            showBookingDetail(booking)
+
+            showBookingDetail(
+                filteredBooking
+            )
         }
 
+        // =========================
+        // ยกเลิก
+        // =========================
+
         btnCancelBooking.setOnClickListener {
+
             showCancelDialog()
         }
 
-        bookingContainer.addView(bookingView)
+        bookingContainer.addView(
+            bookingView
+        )
     }
+
+    // =========================
+    // BOOKING DETAIL
+    // =========================
 
     private fun showBookingDetail(
         booking: BookingData
@@ -168,13 +289,24 @@ class BookingFragment : Fragment() {
             .show()
     }
 
+    // =========================
+    // CANCEL BOOKING
+    // =========================
+
     private fun showCancelDialog() {
 
         AlertDialog.Builder(requireContext())
             .setTitle("ยกเลิกการจอง")
-            .setMessage("คุณต้องการยกเลิกการจองนี้ใช่หรือไม่?")
-            .setNegativeButton("ไม่", null)
-            .setPositiveButton("ยืนยัน") { _, _ ->
+            .setMessage(
+                "คุณต้องการยกเลิกการจองนี้ใช่หรือไม่?"
+            )
+            .setNegativeButton(
+                "ไม่",
+                null
+            )
+            .setPositiveButton(
+                "ยืนยัน"
+            ) { _, _ ->
 
                 BookingManager.clearCurrentBooking()
 
@@ -183,9 +315,17 @@ class BookingFragment : Fragment() {
             .show()
     }
 
-    private fun formatDate(date: String): String {
+    // =========================
+    // FORMAT DATE
+    // =========================
 
-        if (date.isEmpty()) return "-"
+    private fun formatDate(
+        date: String
+    ): String {
+
+        if (date.isEmpty()) {
+            return "-"
+        }
 
         val parts = date.split("/")
 
