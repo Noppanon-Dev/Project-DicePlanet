@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.diceplanet.app.R
 
 // Fragment สำหรับหน้า Home
@@ -31,11 +32,7 @@ class HomeFragment : Fragment() {
         val tvLogin = view.findViewById<TextView>(R.id.tvLogin)
 
         tvLogin.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "หน้า Login ยังไม่ได้สร้าง",
-                Toast.LENGTH_SHORT
-            ).show()
+            findNavController().navigate(R.id.loginFragment)
         }
 
         // ปุ่ม "ดูทั้งหมด" ของหมวดหมู่บอร์ดเกม

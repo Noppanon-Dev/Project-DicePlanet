@@ -1,6 +1,7 @@
 package com.diceplanet.app
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -34,11 +35,23 @@ class MainActivity : AppCompatActivity() {
         // กำหนดให้หน้าภายใน Booking ยังคงเลือกปุ่ม Booking
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
+            // ซ่อน Bottom Navigation ในหน้า Login
+            if (destination.id == R.id.loginFragment) {
+                bottomNavigation.visibility = View.GONE
+            } else {
+                bottomNavigation.visibility = View.VISIBLE
+            }
+
+            // ให้ Booking ยังคงถูกเลือกในทุกหน้าของ Booking
             when (destination.id) {
 
                 R.id.bookingFragment,
                 R.id.booking1_1Fragment,
-                R.id.booking1_2Fragment -> {
+                R.id.booking1_2Fragment,
+                R.id.booking1_3Fragment,
+                R.id.booking1_3GameDetailFragment,
+                R.id.booking1_4Fragment,
+                R.id.booking1_5Fragment -> {
 
                     bottomNavigation.menu
                         .findItem(R.id.bookingFragment)

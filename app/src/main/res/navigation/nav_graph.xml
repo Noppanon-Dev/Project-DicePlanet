@@ -7,6 +7,12 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
+    <!-- Login -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.diceplanet.app.ui.auth.LoginFragment"
+        android:label="เข้าสู่ระบบ" />
+
     <!-- Home -->
     <fragment
         android:id="@+id/homeFragment"
