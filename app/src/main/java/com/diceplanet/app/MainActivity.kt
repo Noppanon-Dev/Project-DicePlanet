@@ -36,7 +36,9 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
             // ซ่อน Bottom Navigation ในหน้า Login
-            if (destination.id == R.id.loginFragment) {
+            if (destination.id == R.id.loginFragment ||
+                destination.id == R.id.registerFragment
+            ) {
                 bottomNavigation.visibility = View.GONE
             } else {
                 bottomNavigation.visibility = View.VISIBLE

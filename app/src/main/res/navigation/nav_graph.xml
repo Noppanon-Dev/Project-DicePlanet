@@ -13,6 +13,11 @@
         android:name="com.diceplanet.app.ui.auth.LoginFragment"
         android:label="เข้าสู่ระบบ" />
 
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.diceplanet.app.ui.auth.RegisterFragment"
+        android:label="สมัครสมาชิก" />
+
     <!-- Home -->
     <fragment
         android:id="@+id/homeFragment"

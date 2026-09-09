@@ -10,6 +10,9 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.diceplanet.app.R
@@ -20,6 +23,7 @@ class LoginFragment : Fragment() {
     private lateinit var etPassword: EditText
     private lateinit var btnShowPassword: ImageButton
     private lateinit var cbRememberMe: CheckBox
+    private lateinit var loginScrollView: NestedScrollView
 
     private var isPasswordVisible = false
 
@@ -45,6 +49,57 @@ class LoginFragment : Fragment() {
         etPassword = view.findViewById(R.id.etPassword)
         btnShowPassword = view.findViewById(R.id.btnShowPassword)
         cbRememberMe = view.findViewById(R.id.cbRememberMe)
+        loginScrollView = view.findViewById(R.id.loginScrollView)
+
+        // จัดการพื้นที่เมื่อคีย์บอร์ดเปิด
+        ViewCompat.setOnApplyWindowInsetsListener(loginScrollView) { v, insets ->
+
+            val imeInsets = insets.getInsets(
+                WindowInsetsCompat.Type.ime()
+            )
+
+            val systemInsets = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+            )
+
+            val bottomPadding = maxOf(
+                imeInsets.bottom,
+                systemInsets.bottom
+            )
+
+            v.setPadding(
+                v.paddingLeft,
+                v.paddingTop,
+                v.paddingRight,
+                bottomPadding
+            )
+
+            insets
+        }
+
+        // เมื่อเลือก Email ให้เลื่อน Email ขึ้น
+        etEmail.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                loginScrollView.postDelayed({
+                    loginScrollView.smoothScrollTo(
+                        0,
+                        etEmail.top - 100
+                    )
+                }, 200)
+            }
+        }
+
+        // เมื่อเลือก Password ให้เลื่อน Password ขึ้น
+        etPassword.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                loginScrollView.postDelayed({
+                    loginScrollView.smoothScrollTo(
+                        0,
+                        etPassword.top - 150
+                    )
+                }, 200)
+            }
+        }
 
         // ปุ่มย้อนกลับ
         view.findViewById<ImageButton>(R.id.btnBack).setOnClickListener {
@@ -93,7 +148,7 @@ class LoginFragment : Fragment() {
                 ).show()
             }
 
-        // เข้าสู่ระบบ - ตอนนี้ยัง Dummy
+        // เข้าสู่ระบบ - Dummy
         view.findViewById<View>(R.id.btnLogin)
             .setOnClickListener {
 
@@ -120,14 +175,7 @@ class LoginFragment : Fragment() {
         // สมัครสมาชิก
         view.findViewById<TextView>(R.id.tvRegister)
             .setOnClickListener {
-
-                // เดี๋ยวเชื่อมไป RegisterFragment
-                // หลังจากสร้างหน้า Register
-                Toast.makeText(
-                    requireContext(),
-                    "ไปหน้าสมัครสมาชิก",
-                    Toast.LENGTH_SHORT
-                ).show()
+                findNavController().navigate(R.id.registerFragment)
             }
     }
 }
