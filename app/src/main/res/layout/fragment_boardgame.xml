@@ -59,7 +59,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_search"
-                    android:contentDescription="search" />
+                    android:contentDescription="ค้นหา" />
 
                 <EditText
                     android:id="@+id/etSearch"
