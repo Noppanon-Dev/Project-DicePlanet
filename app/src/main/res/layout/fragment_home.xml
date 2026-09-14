@@ -450,11 +450,14 @@
 
         <!-- RECOMMEND GAMES -->
 
+        <!-- RECOMMEND GAMES -->
+
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -471,20 +474,25 @@
                     android:clickable="true"
                     android:focusable="true">
 
-                    <View
+                    <ImageView
+                        android:id="@+id/imgGame1"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:background="#EEEEEE" />
+                        android:scaleType="centerCrop"
+                        android:contentDescription="รูปเกม" />
 
                     <TextView
+                        android:id="@+id/tvGameName1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
-                        android:text="เกมที่ 1"
                         android:textColor="#222222"
                         android:textSize="12sp"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+
                 </LinearLayout>
+
 
                 <!-- Game 2 -->
                 <LinearLayout
@@ -496,20 +504,25 @@
                     android:clickable="true"
                     android:focusable="true">
 
-                    <View
+                    <ImageView
+                        android:id="@+id/imgGame2"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:background="#EEEEEE" />
+                        android:scaleType="centerCrop"
+                        android:contentDescription="รูปเกม" />
 
                     <TextView
+                        android:id="@+id/tvGameName2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
-                        android:text="เกมที่ 2"
                         android:textColor="#222222"
                         android:textSize="12sp"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+
                 </LinearLayout>
+
 
                 <!-- Game 3 -->
                 <LinearLayout
@@ -520,21 +533,27 @@
                     android:clickable="true"
                     android:focusable="true">
 
-                    <View
+                    <ImageView
+                        android:id="@+id/imgGame3"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:background="#EEEEEE" />
+                        android:scaleType="centerCrop"
+                        android:contentDescription="รูปเกม" />
 
                     <TextView
+                        android:id="@+id/tvGameName3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7dp"
-                        android:text="เกมที่ 3"
                         android:textColor="#222222"
                         android:textSize="12sp"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+
                 </LinearLayout>
+
             </LinearLayout>
+
         </HorizontalScrollView>
     </LinearLayout>
 </ScrollView>
