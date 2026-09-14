@@ -78,6 +78,11 @@
         android:name="com.diceplanet.app.ui.member.MemberFragment"
         android:label="Member" />
 
+    <fragment
+        android:id="@+id/privilegeFragment"
+        android:name="com.diceplanet.app.ui.member.PrivilegeFragment"
+        android:label="สิทธิพิเศษ" />
+
     <!-- Profile -->
     <fragment
         android:id="@+id/profileFragment"
