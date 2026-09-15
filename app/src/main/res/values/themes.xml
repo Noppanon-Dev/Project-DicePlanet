@@ -1,14 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Theme พื้นฐานของแอป ใช้ Material 3 และรองรับ Light/Dark Mode -->
     <style name="Base.Theme.ProjectDicePlanet"
         parent="Theme.Material3.Light.NoActionBar">
 
-        <!-- สามารถกำหนดสี Font และรูปแบบต่าง ๆ ของแอปเพิ่มเติมได้ที่นี่ -->
+        <!-- สีหลักของแอป -->
+        <item name="android:colorAccent">#633CFF</item>
 
     </style>
 
-    <!-- Theme หลักที่ใช้กับแอป โดยสืบทอดการตั้งค่าจาก Base Theme -->
     <style name="Theme.ProjectDicePlanet"
         parent="Base.Theme.ProjectDicePlanet" />
 

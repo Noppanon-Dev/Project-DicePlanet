@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.Window
+import androidx.core.view.WindowInsetsControllerCompat
 
 // หน้าหลักของแอป ใช้ควบคุมการเปลี่ยนหน้าและ Bottom Navigation
 class MainActivity : AppCompatActivity() {
@@ -16,6 +18,11 @@ class MainActivity : AppCompatActivity() {
 
         // แสดง Layout ของหน้า Main
         setContentView(R.layout.activity_main)
+
+        WindowInsetsControllerCompat(
+            window,
+            window.decorView
+        ).isAppearanceLightStatusBars = true
 
         // หา Navigation Host ที่ใช้แสดงหน้า Fragment ต่าง ๆ
         val navHostFragment =

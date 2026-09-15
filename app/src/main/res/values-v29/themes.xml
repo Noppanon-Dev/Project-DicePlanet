@@ -4,12 +4,12 @@
     <style name="Base.Theme.ProjectDicePlanet"
         parent="Theme.Material3.Light.NoActionBar">
 
+        <!-- บังคับไม่ให้ Android Force Dark -->
+        <item name="android:forceDarkAllowed">false</item>
+
         <!-- สีหลักของแอป -->
         <item name="android:colorAccent">#633CFF</item>
 
     </style>
-
-    <style name="Theme.ProjectDicePlanet"
-        parent="Base.Theme.ProjectDicePlanet" />
 
 </resources>
