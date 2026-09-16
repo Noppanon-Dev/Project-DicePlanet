@@ -1,6 +1,5 @@
 package com.diceplanet.app.ui.booking
 
-import android.content.Context
 import kotlin.random.Random
 
 object BookingManager {
