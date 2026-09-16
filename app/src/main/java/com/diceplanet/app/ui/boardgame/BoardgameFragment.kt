@@ -1,20 +1,27 @@
 package com.diceplanet.app.ui.boardgame
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.diceplanet.app.R
-import androidx.navigation.fragment.findNavController
 
-// Fragment สำหรับหน้า Board Game
 class BoardgameFragment : Fragment() {
+
+    // =========================
+    // View
+    // =========================
 
     private lateinit var recyclerBoardgame: RecyclerView
     private lateinit var etSearch: EditText
@@ -23,9 +30,83 @@ class BoardgameFragment : Fragment() {
     private lateinit var tvCategoryFilter: TextView
     private lateinit var boardgameAdapter: BoardgameAdapter
 
-    // รูปแบบการเรียงเริ่มต้น
-    private var currentCategory = "ทั้งหมด"
+
+    // =========================
+    // Filter UI
+    // =========================
+
+    private lateinit var categoryFilterContainer: LinearLayout
+    private lateinit var categoryCheckboxContainer: LinearLayout
+    private lateinit var tvClearCategory: TextView
+    private lateinit var tvApplyCategory: TextView
+
+
+    // =========================
+    // หมวดหมู่ที่เลือก
+    // =========================
+
+    private val selectedCategories =
+        mutableSetOf<String>()
+
+
+    // =========================
+    // หมวดหมู่หลัก
+    // =========================
+
+    private val allCategories = listOf(
+        "Abstract",
+        "Action",
+        "Adventure",
+        "Animals",
+        "Bluffing",
+        "Card Game",
+        "City Building",
+        "Civilization",
+        "Deduction",
+        "Dice",
+        "Educational",
+        "Economic",
+        "Engine Building",
+        "Exploration",
+        "Family",
+        "Fantasy",
+        "Fighting",
+        "Hand Management",
+        "Horror",
+        "Humor",
+        "Medieval",
+        "Mystery",
+        "Mythology",
+        "Negotiation",
+        "Party Game",
+        "Political",
+        "Puzzle",
+        "Racing",
+        "Role Playing",
+        "Science Fiction",
+        "Set Collection",
+        "Social Deduction",
+        "Solo",
+        "Sports",
+        "Storytelling",
+        "Strategy",
+        "Survival",
+        "Travel",
+        "Warfare",
+        "Word Game"
+    )
+
+
+    // =========================
+    // รูปแบบการเรียง
+    // =========================
+
     private var currentSort = "ความนิยม"
+
+
+    // =========================
+    // สร้าง View
+    // =========================
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,163 +121,237 @@ class BoardgameFragment : Fragment() {
         )
     }
 
-    // กรอง + เรียงรายการเกม
-    private fun updateGameList(gameList: List<BoardGame>) {
 
-        // คำที่ค้นหา
-        val keyword = etSearch.text.toString().trim()
-
-        // กรองเกมจากชื่อ
-        val filteredList = gameList.filter { game ->
-
-            val matchSearch =
-                keyword.isEmpty() ||
-                        game.name.contains(
-                            keyword,
-                            ignoreCase = true
-                        )
-
-            val matchCategory =
-                currentCategory == "ทั้งหมด" ||
-                        game.category == currentCategory
-
-            matchSearch && matchCategory
-        }
-
-        // เรียงตามตัวเลือก
-        val sortedList = when (currentSort) {
-
-            // ความนิยม
-            "ความนิยม" -> {
-                filteredList.sortedByDescending {
-                    it.popularity
-                }
-            }
-
-            // A-Z
-            "A-Z" -> {
-                filteredList.sortedBy {
-                    it.name
-                }
-            }
-
-            // Z-A
-            "Z-A" -> {
-                filteredList.sortedByDescending {
-                    it.name
-                }
-            }
-
-            // มาใหม่
-            "มาใหม่" -> {
-                filteredList.sortedByDescending {
-                    it.isNew
-                }
-            }
-
-            else -> filteredList
-        }
-
-        // อัปเดตรายการ Card
-        boardgameAdapter.updateList(sortedList)
-
-        // อัปเดตจำนวนเกม
-        tvGameCount.text = "ทั้งหมด ${sortedList.size} เกม"
-    }
+    // =========================
+    // หลังสร้าง View
+    // =========================
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
     ) {
-        super.onViewCreated(view, savedInstanceState)
 
-        // เชื่อม View จาก XML
-        recyclerBoardgame =
-            view.findViewById(R.id.recyclerBoardgame)
-
-        etSearch =
-            view.findViewById(R.id.etSearch)
-
-        tvGameCount =
-            view.findViewById(R.id.tvGameCount)
-
-        tvSort =
-            view.findViewById(R.id.tvSort)
-
-        tvCategoryFilter =
-            view.findViewById(R.id.tvCategoryFilter)
-
-        // RecyclerView เรียง Card แนวตั้ง
-        recyclerBoardgame.layoutManager =
-            LinearLayoutManager(requireContext())
-
-        // ข้อมูลเกมตัวอย่าง
-        val gameList = listOf(
-
-            BoardGame(
-                name = "Dixit",
-                category = "ปาร์ตี้",
-                players = "3–4 คน",
-                playTime = "30–60 นาที",
-                description = "ตีความภาพและเรื่องราว พร้อมค้นหาคำใบ้เพื่อร่วมโต๊ะเดียวกัน",
-                imageResId = R.drawable.dixit,
-                popularity = 100,
-                isNew = false
-            ),
-
-            BoardGame(
-                name = "Catan",
-                category = "วางแผน",
-                players = "3–4 คน",
-                playTime = "60–90 นาที",
-                description = "สร้างถนนและเมือง แลกเปลี่ยนทรัพยากรเพื่อพัฒนาอาณาจักรของคุณ",
-                imageResId = R.drawable.catan,
-                popularity = 90,
-                isNew = false
-            ),
-
-            BoardGame(
-                name = "Azul",
-                category = "วางแผน",
-                players = "2–4 คน",
-                playTime = "30–45 นาที",
-                description = "เลือกกระเบื้องและจัดวางให้สวยงามเพื่อทำคะแนนให้ได้มากที่สุด",
-                imageResId = R.drawable.azul,
-                popularity = 80,
-                isNew = true
-            )
+        super.onViewCreated(
+            view,
+            savedInstanceState
         )
 
-        // สร้าง Adapter
-        boardgameAdapter = BoardgameAdapter(gameList) { game ->
 
-            val bundle = Bundle().apply {
+        // =========================
+        // เชื่อม View
+        // =========================
 
-                putString("name", game.name)
+        recyclerBoardgame =
+            view.findViewById(
+                R.id.recyclerBoardgame
+            )
 
-                putString("category", game.category)
+        etSearch =
+            view.findViewById(
+                R.id.etSearch
+            )
 
-                putString("players", game.players)
+        tvGameCount =
+            view.findViewById(
+                R.id.tvGameCount
+            )
 
-                putString("playTime", game.playTime)
+        tvSort =
+            view.findViewById(
+                R.id.tvSort
+            )
 
-                putString("description", game.description)
+        tvCategoryFilter =
+            view.findViewById(
+                R.id.tvCategoryFilter
+            )
 
-                putInt("imageResId", game.imageResId)
-            }
+        categoryFilterContainer =
+            view.findViewById(
+                R.id.categoryFilterContainer
+            )
 
-            findNavController().navigate(
-                R.id.boardgameDetailFragment,
-                bundle
+        categoryCheckboxContainer =
+            view.findViewById(
+                R.id.categoryCheckboxContainer
+            )
+
+        tvClearCategory =
+            view.findViewById(
+                R.id.tvClearCategory
+            )
+
+        tvApplyCategory =
+            view.findViewById(
+                R.id.tvApplyCategory
+            )
+
+
+        // =========================
+        // RecyclerView
+        // =========================
+
+        recyclerBoardgame.layoutManager =
+            LinearLayoutManager(
+                requireContext()
+            )
+
+
+        // =========================
+        // รับ Category จากหน้า Home
+        // =========================
+
+        val categoryFromHome =
+            arguments?.getString(
+                "category"
+            )
+
+        if (!categoryFromHome.isNullOrEmpty()) {
+
+            selectedCategories.add(
+                categoryFromHome
             )
         }
 
-        // เชื่อม Adapter กับ RecyclerView
+
+        // =========================
+        // ข้อมูลเกม
+        // =========================
+
+        val gameList =
+            BoardGameData.gameList
+
+
+        // =========================
+        // Adapter
+        // =========================
+
+        boardgameAdapter =
+            BoardgameAdapter(gameList) { game ->
+
+                val bundle =
+                    Bundle().apply {
+
+                        putString(
+                            "name",
+                            game.name
+                        )
+
+                        putString(
+                            "category",
+                            game.categories.joinToString(
+                                " • "
+                            )
+                        )
+
+                        putString(
+                            "players",
+                            game.players
+                        )
+
+                        putString(
+                            "playTime",
+                            game.playTime
+                        )
+
+                        putString(
+                            "description",
+                            game.description
+                        )
+
+                        putInt(
+                            "imageResId",
+                            game.imageResId
+                        )
+                    }
+
+
+                findNavController().navigate(
+                    R.id.boardgameDetailFragment,
+                    bundle
+                )
+            }
+
+
         recyclerBoardgame.adapter =
             boardgameAdapter
 
-        // แสดงรายการเริ่มต้นตามความนิยม
+
+        // =========================
+        // สร้าง Checkbox
+        // =========================
+
+        setupCategoryCheckboxes()
+
+
+        // =========================
+        // แสดงเกมตอนเริ่ม
+        // =========================
+
         updateGameList(gameList)
+
+
+        // =========================
+        // ปุ่ม Filter
+        // =========================
+
+        tvCategoryFilter.setOnClickListener {
+
+            if (
+                categoryFilterContainer.visibility
+                == View.VISIBLE
+            ) {
+
+                categoryFilterContainer.visibility =
+                    View.GONE
+
+            } else {
+
+                categoryFilterContainer.visibility =
+                    View.VISIBLE
+            }
+        }
+
+
+        // =========================
+        // ล้าง Category
+        // =========================
+
+        tvClearCategory.setOnClickListener {
+
+            selectedCategories.clear()
+
+
+            for (
+            i in 0 until
+                    categoryCheckboxContainer.childCount
+            ) {
+
+                val checkBox =
+                    categoryCheckboxContainer
+                        .getChildAt(i) as CheckBox
+
+                checkBox.isChecked =
+                    false
+            }
+
+
+            updateGameList(gameList)
+        }
+
+
+        // =========================
+        // เสร็จสิ้น
+        // =========================
+
+        tvApplyCategory.setOnClickListener {
+
+            updateGameList(gameList)
+
+            categoryFilterContainer.visibility =
+                View.GONE
+        }
+
 
         // =========================
         // ระบบ Sort
@@ -205,65 +360,57 @@ class BoardgameFragment : Fragment() {
         tvSort.setOnClickListener {
 
             val popup =
-                PopupMenu(requireContext(), tvSort)
+                PopupMenu(
+                    requireContext(),
+                    tvSort
+                )
 
-            // ตัวเลือกการเรียง
-            popup.menu.add("ความนิยม")
-            popup.menu.add("A-Z")
-            popup.menu.add("Z-A")
-            popup.menu.add("มาใหม่")
 
-            // เมื่อเลือก Sort
+            popup.menu.add(
+                "ความนิยม"
+            )
+
+            popup.menu.add(
+                "A-Z"
+            )
+
+            popup.menu.add(
+                "Z-A"
+            )
+
+            popup.menu.add(
+                "มาใหม่"
+            )
+
+
             popup.setOnMenuItemClickListener { item ->
 
                 currentSort =
                     item.title.toString()
 
-                // เปลี่ยนข้อความปุ่ม
                 tvSort.text =
                     "${currentSort}  ▾"
 
-                // กรอง + เรียงใหม่
-                updateGameList(gameList)
+
+                updateGameList(
+                    gameList
+                )
 
                 true
             }
 
-            popup.show()
-        }
-
-        tvCategoryFilter.setOnClickListener {
-
-            val popup = PopupMenu(
-                requireContext(),
-                tvCategoryFilter
-            )
-
-            popup.menu.add("ทั้งหมด")
-            popup.menu.add("ปาร์ตี้")
-            popup.menu.add("วางแผน")
-            popup.menu.add("เล่าเรื่อง")
-
-            popup.setOnMenuItemClickListener { item ->
-
-                currentCategory = item.title.toString()
-
-                tvCategoryFilter.text = "☷"
-
-                updateGameList(gameList)
-
-                true
-            }
 
             popup.show()
         }
+
 
         // =========================
         // ระบบ Search
         // =========================
 
         etSearch.addTextChangedListener(
-            object : android.text.TextWatcher {
+
+            object : TextWatcher {
 
                 override fun beforeTextChanged(
                     s: CharSequence?,
@@ -271,8 +418,8 @@ class BoardgameFragment : Fragment() {
                     count: Int,
                     after: Int
                 ) {
-                    // ไม่ต้องทำอะไร
                 }
+
 
                 override fun onTextChanged(
                     s: CharSequence?,
@@ -281,16 +428,213 @@ class BoardgameFragment : Fragment() {
                     count: Int
                 ) {
 
-                    // กรอง + เรียงใหม่
-                    updateGameList(gameList)
+                    updateGameList(
+                        gameList
+                    )
                 }
 
+
                 override fun afterTextChanged(
-                    s: android.text.Editable?
+                    s: Editable?
                 ) {
-                    // ไม่ต้องทำอะไร
                 }
             }
         )
+    }
+
+
+    // =========================
+    // สร้าง Checkbox หมวดหมู่
+    // =========================
+
+    private fun setupCategoryCheckboxes() {
+
+        categoryCheckboxContainer
+            .removeAllViews()
+
+
+        for (
+        category in allCategories
+        ) {
+
+            val checkBox =
+                CheckBox(
+                    requireContext()
+                )
+
+
+            checkBox.text =
+                category
+
+            checkBox.textSize =
+                13f
+
+
+            // ถ้ามาจาก Home
+            // ให้ Checkbox ถูกเลือกไว้
+            checkBox.isChecked =
+                selectedCategories
+                    .contains(category)
+
+
+            checkBox.setOnCheckedChangeListener {
+                    _,
+                    isChecked ->
+
+                if (isChecked) {
+
+                    selectedCategories.add(
+                        category
+                    )
+
+                } else {
+
+                    selectedCategories.remove(
+                        category
+                    )
+                }
+            }
+
+
+            // ระยะห่างแต่ละ Checkbox
+            val params =
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+
+
+            params.marginEnd =
+                8
+
+
+            checkBox.layoutParams =
+                params
+
+
+            categoryCheckboxContainer.addView(
+                checkBox
+            )
+        }
+    }
+
+
+    // =========================
+    // กรอง + เรียงเกม
+    // =========================
+
+    private fun updateGameList(
+        gameList: List<BoardGame>
+    ) {
+
+        // =========================
+        // Search
+        // =========================
+
+        val keyword =
+            etSearch.text
+                .toString()
+                .trim()
+
+
+        // =========================
+        // Filter
+        // =========================
+
+        val filteredList =
+            gameList.filter { game ->
+
+
+                // Search
+                val matchSearch =
+                    keyword.isEmpty() ||
+                            game.name.contains(
+                                keyword,
+                                ignoreCase = true
+                            )
+
+
+                // Category แบบ AND
+                val matchCategory =
+                    selectedCategories.isEmpty() ||
+                            selectedCategories.all {
+                                    category ->
+
+                                game.categories
+                                    .contains(
+                                        category
+                                    )
+                            }
+
+
+                // Search และ Category
+                matchSearch &&
+                        matchCategory
+            }
+
+
+        // =========================
+        // Sort
+        // =========================
+
+        val sortedList =
+            when (currentSort) {
+
+                // ความนิยม
+                "ความนิยม" ->
+
+                    filteredList
+                        .sortedByDescending {
+                            it.popularity
+                        }
+
+
+                // A-Z
+                "A-Z" ->
+
+                    filteredList
+                        .sortedBy {
+                            it.name
+                        }
+
+
+                // Z-A
+                "Z-A" ->
+
+                    filteredList
+                        .sortedByDescending {
+                            it.name
+                        }
+
+
+                // มาใหม่
+                "มาใหม่" ->
+
+                    filteredList
+                        .sortedByDescending {
+                            it.isNew
+                        }
+
+
+                else ->
+                    filteredList
+            }
+
+
+        // =========================
+        // อัปเดตรายการ
+        // =========================
+
+        boardgameAdapter.updateList(
+            sortedList
+        )
+
+
+        // =========================
+        // จำนวนเกม
+        // =========================
+
+        tvGameCount.text =
+            "ทั้งหมด ${sortedList.size} เกม"
     }
 }

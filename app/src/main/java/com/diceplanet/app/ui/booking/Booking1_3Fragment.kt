@@ -85,7 +85,9 @@ class Booking1_3Fragment : Fragment() {
 
             BoardGame(
                 name = "Dixit",
-                category = "ปาร์ตี้",
+                categories = listOf(
+                    "Party Game"
+                ),
                 players = "3–4 คน",
                 playTime = "30–60 นาที",
                 description = "ตีความภาพและเรื่องราว พร้อมค้นหาคำใบ้เพื่อร่วมโต๊ะเดียวกัน",
@@ -96,7 +98,9 @@ class Booking1_3Fragment : Fragment() {
 
             BoardGame(
                 name = "Catan",
-                category = "วางแผน",
+                categories = listOf(
+                    "Strategy"
+                ),
                 players = "3–4 คน",
                 playTime = "60–90 นาที",
                 description = "สร้างถนนและเมือง แลกเปลี่ยนทรัพยากรเพื่อพัฒนาอาณาจักรของคุณ",
@@ -107,7 +111,9 @@ class Booking1_3Fragment : Fragment() {
 
             BoardGame(
                 name = "Azul",
-                category = "วางแผน",
+                categories = listOf(
+                    "Strategy"
+                ),
                 players = "2–4 คน",
                 playTime = "30–45 นาที",
                 description = "เลือกกระเบื้องและจัดวางให้สวยงามเพื่อทำคะแนนให้ได้มากที่สุด",
@@ -134,7 +140,7 @@ class Booking1_3Fragment : Fragment() {
 
                     putString(
                         "category",
-                        game.category
+                        game.categories.joinToString(" • ")
                     )
 
                     putString(
@@ -343,7 +349,7 @@ class Booking1_3Fragment : Fragment() {
 
                 val matchCategory =
                     currentCategory == "ทั้งหมด" ||
-                            game.category == currentCategory
+                            game.categories.contains(currentCategory)
 
                 matchSearch &&
                         matchCategory

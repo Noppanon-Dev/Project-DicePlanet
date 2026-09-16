@@ -2,7 +2,7 @@ package com.diceplanet.app.ui.boardgame
 
 data class BoardGame(
     val name: String,
-    val category: String,
+    val categories: List<String>,
     val players: String,
     val playTime: String,
     val description: String,

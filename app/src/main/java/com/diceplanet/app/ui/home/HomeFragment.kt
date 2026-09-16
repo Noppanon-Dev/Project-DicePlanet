@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.diceplanet.app.R
@@ -46,20 +45,67 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.loginFragment)
         }
 
+
         // =========================
-        // ดูทั้งหมด - หมวดหมู่
+        // ดูทั้งหมด
         // =========================
 
         val tvAllCategory =
             view.findViewById<TextView>(R.id.tvAllCategory)
 
         tvAllCategory.setOnClickListener {
-            requireActivity()
-                .findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(
-                    R.id.bottom_navigation
-                )
-                .selectedItemId = R.id.boardgameFragment
+            openBoardgame()
         }
+
+
+        // =========================
+        // หมวดหมู่เด่น
+        // =========================
+
+        // Family
+        val categoryFamily =
+            view.findViewById<View>(R.id.categoryFamily)
+
+        categoryFamily.setOnClickListener {
+            openBoardgame("Family")
+        }
+
+
+        // Puzzle
+        val categoryPuzzle =
+            view.findViewById<View>(R.id.categoryPuzzle)
+
+        categoryPuzzle.setOnClickListener {
+            openBoardgame("Puzzle")
+        }
+
+
+        // Party Game
+        val categoryParty =
+            view.findViewById<View>(R.id.categoryParty)
+
+        categoryParty.setOnClickListener {
+            openBoardgame("Party Game")
+        }
+
+
+        // Strategy
+        val categoryStrategy =
+            view.findViewById<View>(R.id.categoryStrategy)
+
+        categoryStrategy.setOnClickListener {
+            openBoardgame("Strategy")
+        }
+
+
+        // Fantasy
+        val categoryFantasy =
+            view.findViewById<View>(R.id.categoryFantasy)
+
+        categoryFantasy.setOnClickListener {
+            openBoardgame("Fantasy")
+        }
+
 
         // =========================
         // เกมยอดนิยม
@@ -74,11 +120,14 @@ class HomeFragment : Fragment() {
         val game3 =
             view.findViewById<View>(R.id.gameCard3)
 
-        // เอาเกมจากข้อมูลกลาง
+
         val popularGames =
             BoardGameData.gameList
-                .sortedByDescending { it.popularity }
+                .sortedByDescending {
+                    it.popularity
+                }
                 .take(3)
+
 
         setupGameCard(
             game1,
@@ -101,6 +150,7 @@ class HomeFragment : Fragment() {
             R.id.tvGameName3
         )
 
+
         // =========================
         // ดูเกมทั้งหมด
         // =========================
@@ -109,26 +159,29 @@ class HomeFragment : Fragment() {
             view.findViewById<TextView>(R.id.tvAllGames)
 
         tvAllGames.setOnClickListener {
-            requireActivity()
-                .findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(
-                    R.id.bottom_navigation
-                )
-                .selectedItemId = R.id.boardgameFragment
-        }
-
-        // =========================
-        // หมวดหมู่ "ทั้งหมด"
-        // =========================
-
-        val categoryAll =
-            view.findViewById<View>(R.id.categoryAll)
-
-        categoryAll.setOnClickListener {
-            findNavController().navigate(
-                R.id.boardgameFragment
-            )
+            openBoardgame()
         }
     }
+
+
+    // =========================
+    // เปิดหน้า Board Game
+    // =========================
+
+    private fun openBoardgame(category: String? = null) {
+
+        val bundle = category?.let {
+            Bundle().apply {
+                putString("category", it)
+            }
+        }
+
+        findNavController().navigate(
+            R.id.boardgameFragment,
+            bundle
+        )
+    }
+
 
     // =========================
     // ตั้งค่าการ์ดเกม
@@ -148,6 +201,8 @@ class HomeFragment : Fragment() {
 
         card.visibility = View.VISIBLE
 
+
+        // รูปเกม
         val imageView =
             card.findViewById<ImageView>(imageId)
 
@@ -155,20 +210,48 @@ class HomeFragment : Fragment() {
             game.imageResId
         )
 
+
+        // ชื่อเกม
         val gameName =
             card.findViewById<TextView>(nameId)
 
         gameName.text = game.name
 
+
+        // กดการ์ดเกม
         card.setOnClickListener {
 
             val bundle = Bundle().apply {
-                putString("name", game.name)
-                putString("category", game.category)
-                putString("players", game.players)
-                putString("playTime", game.playTime)
-                putString("description", game.description)
-                putInt("imageResId", game.imageResId)
+
+                putString(
+                    "name",
+                    game.name
+                )
+
+                putString(
+                    "category",
+                    game.categories.joinToString(" • ")
+                )
+
+                putString(
+                    "players",
+                    game.players
+                )
+
+                putString(
+                    "playTime",
+                    game.playTime
+                )
+
+                putString(
+                    "description",
+                    game.description
+                )
+
+                putInt(
+                    "imageResId",
+                    game.imageResId
+                )
             }
 
             findNavController().navigate(

@@ -2,6 +2,7 @@
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -25,11 +26,9 @@
             android:textStyle="bold"
             android:textColor="@android:color/black" />
 
-        <!-- เว้นระยะ -->
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />
-
 
         <!-- ============================= -->
         <!-- Search + Filter -->
@@ -77,13 +76,9 @@
 
             </LinearLayout>
 
-
-            <!-- ช่องว่าง -->
-
             <Space
                 android:layout_width="10dp"
                 android:layout_height="match_parent" />
-
 
             <!-- ปุ่มกรองหมวดหมู่ -->
 
@@ -103,6 +98,88 @@
 
 
         <!-- ============================= -->
+        <!-- เมนูหมวดหมู่ -->
+        <!-- ============================= -->
+
+        <LinearLayout
+            android:id="@+id/categoryFilterContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:background="@drawable/bg_search_bar"
+            android:padding="12dp">
+
+            <!-- หัวข้อ -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="เลือกหมวดหมู่"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <!-- หมวดหมู่แบบ CheckBox -->
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:scrollbars="none"
+                android:fillViewport="false">
+
+                <LinearLayout
+                    android:id="@+id/categoryCheckboxContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp" />
+
+            </HorizontalScrollView>
+
+            <!-- ปุ่ม -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvClearCategory"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="ล้างทั้งหมด"
+                    android:textColor="#555555"
+                    android:textSize="13sp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/tvApplyCategory"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="เสร็จสิ้น"
+                    android:textColor="#5532B8"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!-- ============================= -->
         <!-- จำนวนเกม + เรียง -->
         <!-- ============================= -->
 
@@ -113,8 +190,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <!-- จำนวนเกม -->
-
             <TextView
                 android:id="@+id/tvGameCount"
                 android:layout_width="0dp"
@@ -124,8 +199,6 @@
                 android:textColor="#333333"
                 android:textSize="13sp"
                 android:textStyle="bold" />
-
-            <!-- เรียงตาม -->
 
             <TextView
                 android:id="@+id/tvSort"

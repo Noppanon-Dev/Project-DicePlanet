@@ -61,7 +61,7 @@ class BoardgameAdapter(
 
         holder.tvGameName.text = game.name
 
-        holder.tvGameCategory.text = game.category
+        holder.tvGameCategory.text = game.categories.joinToString(" • ")
 
         holder.tvGamePlayers.text = game.players
 

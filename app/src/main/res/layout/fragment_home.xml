@@ -226,44 +226,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <!-- ทั้งหมด -->
-                <LinearLayout
-                    android:id="@+id/categoryAll"
-                    android:layout_width="62dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="14dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:clickable="true"
-                    android:focusable="true">
-
-                    <FrameLayout
-                        android:layout_width="52dp"
-                        android:layout_height="52dp"
-                        android:background="@drawable/bg_category_circle">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="หมวดหมู่ทั้งหมด"
-                            android:adjustViewBounds="true"
-                            android:scaleType="fitCenter"
-                            android:src="@drawable/category_all"
-                            />
-
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="ทั้งหมด"
-                        android:textColor="#333333"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-                <!-- ครอบครัว -->
+                <!-- Family -->
                 <LinearLayout
                     android:id="@+id/categoryFamily"
                     android:layout_width="62dp"
@@ -284,24 +247,26 @@
                             android:layout_height="36dp"
                             android:layout_gravity="center"
                             android:contentDescription="หมวดหมู่ครอบครัว"
-                            android:adjustViewBounds="true"
                             android:scaleType="fitCenter"
                             android:src="@drawable/category_family"
-                            app:tint="@color/blue"/>
+                            app:tint="#4D9FFF" />
+
                     </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="ครอบครัว"
+                        android:text="Family"
                         android:textColor="#333333"
                         android:textSize="11sp" />
+
                 </LinearLayout>
 
-                <!-- กลยุทธ์ -->
+
+                <!-- Puzzle -->
                 <LinearLayout
-                    android:id="@+id/categoryTactic"
+                    android:id="@+id/categoryPuzzle"
                     android:layout_width="62dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="14dp"
@@ -319,12 +284,10 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_gravity="center"
-                            android:contentDescription="หมวดหมู่กลยุทธ์"
-                            android:adjustViewBounds="true"
+                            android:contentDescription="หมวดหมู่ Puzzle"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/category_tactical"
-                            app:tint="@color/yellow"
-                            />
+                            android:src="@drawable/category_puzzle"
+                            app:tint="#FFCC00" />
 
                     </FrameLayout>
 
@@ -332,12 +295,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="กลยุทธ์"
+                        android:text="Puzzle"
                         android:textColor="#333333"
                         android:textSize="11sp" />
+
                 </LinearLayout>
 
-                <!-- ปาร์ตี้ -->
+
+                <!-- Party Game -->
                 <LinearLayout
                     android:id="@+id/categoryParty"
                     android:layout_width="62dp"
@@ -357,26 +322,27 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_gravity="center"
-                            android:contentDescription="หมวดหมู่ปาร์ตี้"
-                            android:adjustViewBounds="true"
+                            android:contentDescription="หมวดหมู่ Party Game"
                             android:scaleType="fitCenter"
                             android:src="@drawable/category_party"
-                            app:tint="@color/purple"
-                            />
+                            app:tint="#8B5CF6" />
+
                     </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="ปาร์ตี้"
+                        android:text="Party"
                         android:textColor="#333333"
                         android:textSize="11sp" />
+
                 </LinearLayout>
 
-                <!-- 2คน -->
+
+                <!-- Strategy -->
                 <LinearLayout
-                    android:id="@+id/categoryTwoPeople"
+                    android:id="@+id/categoryStrategy"
                     android:layout_width="62dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="14dp"
@@ -394,26 +360,62 @@
                             android:layout_width="36dp"
                             android:layout_height="36dp"
                             android:layout_gravity="center"
-                            android:contentDescription="หมวดหมู่2คน"
-                            android:adjustViewBounds="true"
+                            android:contentDescription="หมวดหมู่ Strategy"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/category_twopeople"
-                            app:tint="@color/green"
-                            />
+                            android:src="@drawable/category_strategy"
+                            app:tint="#4CAF50" />
+
                     </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="2คน"
+                        android:text="Strategy"
                         android:textColor="#333333"
-                        android:textSize="11sp"
-
-                        />
+                        android:textSize="11sp" />
 
                 </LinearLayout>
+
+
+                <!-- Fantasy -->
+                <LinearLayout
+                    android:id="@+id/categoryFantasy"
+                    android:layout_width="62dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <FrameLayout
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:background="@drawable/bg_category_circle">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="หมวดหมู่ Fantasy"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/category_fantasy"
+                            app:tint="#FF8A3D" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Fantasy"
+                        android:textColor="#333333"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
+
         </HorizontalScrollView>
 
         <!-- RECOMMEND GAMES HEADER -->
