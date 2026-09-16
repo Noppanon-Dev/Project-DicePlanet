@@ -90,9 +90,11 @@ class MemberFragment : Fragment() {
             R.id.btnPrivilege
         ).setOnClickListener {
 
-            findNavController().navigate(
-                R.id.privilegeFragment
-            )
+            Toast.makeText(
+                requireContext(),
+                "หน้าสิทธิพิเศษอยู่ในขั้นตอนการพัฒนา",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         // =========================
