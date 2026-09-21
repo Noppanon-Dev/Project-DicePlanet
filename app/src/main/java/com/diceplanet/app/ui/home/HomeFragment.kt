@@ -201,7 +201,6 @@ class HomeFragment : Fragment() {
 
         card.visibility = View.VISIBLE
 
-
         // รูปเกม
         val imageView =
             card.findViewById<ImageView>(imageId)
@@ -210,13 +209,11 @@ class HomeFragment : Fragment() {
             game.imageResId
         )
 
-
         // ชื่อเกม
         val gameName =
             card.findViewById<TextView>(nameId)
 
         gameName.text = game.name
-
 
         // กดการ์ดเกม
         card.setOnClickListener {
@@ -228,9 +225,9 @@ class HomeFragment : Fragment() {
                     game.name
                 )
 
-                putString(
-                    "category",
-                    game.categories.joinToString(" • ")
+                putStringArray(
+                    "categories",
+                    game.categories.toTypedArray()
                 )
 
                 putString(

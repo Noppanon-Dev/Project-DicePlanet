@@ -1,6 +1,8 @@
 package com.diceplanet.app.ui.booking
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.Dialog
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -61,6 +63,7 @@ class BookingFragment : Fragment() {
     // FILTER
     // =========================
 
+    @SuppressLint("SetTextI18n")
     private fun showBookingFilter(filterView: TextView) {
 
         val popupMenu = PopupMenu(
@@ -91,6 +94,7 @@ class BookingFragment : Fragment() {
     // SHOW BOOKING
     // =========================
 
+    @SuppressLint("UseKtx", "SetTextI18n")
     private fun showCurrentBooking(
         filter: String = "ทั้งหมด"
     ) {
@@ -213,7 +217,11 @@ class BookingFragment : Fragment() {
             )
 
         tvBookingTime.text =
-            "${filteredBooking.startTime} - ${filteredBooking.endTime}"
+            if (filteredBooking.playMode == "fullDay") {
+                "เหมาวัน"
+            } else {
+                "${filteredBooking.startTime} - ${filteredBooking.endTime}"
+            }
 
         tvBookingTable.text =
             if (filteredBooking.selectedTable.startsWith("A")) {
@@ -257,36 +265,139 @@ class BookingFragment : Fragment() {
     // BOOKING DETAIL
     // =========================
 
+    @SuppressLint("SetTextI18n")
     private fun showBookingDetail(
         booking: BookingData
     ) {
 
-        val message = """
-            เลขที่การจอง: ${booking.bookingId}
-            
-            วันที่: ${formatDate(booking.selectedDate)}
-            เวลา: ${booking.startTime} - ${booking.endTime}
-            โต๊ะ: ${
+        val dialog = Dialog(requireContext())
+
+        dialog.setContentView(
+            R.layout.dialog_booking_detail
+        )
+
+        dialog.window?.setBackgroundDrawableResource(
+            android.R.color.transparent
+        )
+
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        val tvDialogBookingId =
+            dialog.findViewById<TextView>(
+                R.id.tvDialogBookingId
+            )
+
+        val tvDialogStatus =
+            dialog.findViewById<TextView>(
+                R.id.tvDialogStatus
+            )
+
+        val tvDialogDate =
+            dialog.findViewById<TextView>(
+                R.id.tvDialogDate
+            )
+
+        val tvDialogTime =
+            dialog.findViewById<TextView>(
+                R.id.tvDialogTime
+            )
+
+        val tvDialogTable =
+            dialog.findViewById<TextView>(
+                R.id.tvDialogTable
+            )
+
+        val tvDialogPlayers =
+            dialog.findViewById<TextView>(
+                R.id.tvDialogPlayers
+            )
+
+        val tvDialogGame =
+            dialog.findViewById<TextView>(
+                R.id.tvDialogGame
+            )
+
+        val tvDialogContactName =
+            dialog.findViewById<TextView>(
+                R.id.tvDialogContactName
+            )
+
+        val tvDialogContactPhone =
+            dialog.findViewById<TextView>(
+                R.id.tvDialogContactPhone
+            )
+
+        val btnDialogClose =
+            dialog.findViewById<TextView>(
+                R.id.btnDialogClose
+            )
+
+        // =========================
+        // ข้อมูล
+        // =========================
+
+        tvDialogBookingId.text =
+            booking.bookingId
+
+        tvDialogStatus.text =
+            booking.status
+
+        tvDialogDate.text =
+            formatDate(
+                booking.selectedDate
+            )
+
+        tvDialogTime.text =
+            if (booking.playMode == "fullDay") {
+                "เหมาวัน"
+            } else {
+                "${booking.startTime} - ${booking.endTime}"
+            }
+
+        tvDialogTable.text =
             if (booking.selectedTable.startsWith("A")) {
                 "ชั้น 1 - ${booking.selectedTable}"
             } else {
                 "ชั้น 2 - ${booking.selectedTable}"
             }
-        }
-            จำนวนผู้เล่น: ${booking.playerCount} คน
-            เกม: ${booking.gameName}
-            
-            ชื่อผู้จอง: ${booking.contactName}
-            เบอร์โทร: ${booking.contactPhone}
-            
-            สถานะ: ${booking.status}
-        """.trimIndent()
 
-        AlertDialog.Builder(requireContext())
-            .setTitle("รายละเอียดการจอง")
-            .setMessage(message)
-            .setPositiveButton("ปิด", null)
-            .show()
+        tvDialogPlayers.text =
+            "${booking.playerCount} คน"
+
+        tvDialogGame.text =
+            if (booking.gameName.isNotEmpty()) {
+                booking.gameName
+            } else {
+                "-"
+            }
+
+        tvDialogContactName.text =
+            booking.contactName
+
+        tvDialogContactPhone.text =
+            booking.contactPhone
+
+        // =========================
+        // ปิด
+        // =========================
+
+        btnDialogClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // =========================
+        // แสดง Dialog
+        // =========================
+
+        dialog.show()
+
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.88).toInt(),
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     }
 
     // =========================

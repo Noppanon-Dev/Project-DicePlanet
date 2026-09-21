@@ -1,5 +1,6 @@
 package com.diceplanet.app.ui.booking
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,25 +17,50 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.diceplanet.app.R
+import com.diceplanet.app.ui.boardgame.BoardGame
 import com.diceplanet.app.ui.boardgame.BoardGameData
 import com.diceplanet.app.ui.boardgame.BoardgameAdapter
+import androidx.core.view.isVisible
 
 class Booking1_3Fragment : Fragment() {
+
+    // =========================================================
+    // Views
+    // =========================================================
 
     private lateinit var recyclerBoardgame: RecyclerView
     private lateinit var etSearch: EditText
     private lateinit var tvGameCount: TextView
     private lateinit var tvSort: TextView
     private lateinit var tvCategoryFilter: TextView
+
     private lateinit var categoryFilterContainer: LinearLayout
     private lateinit var categoryCheckboxContainer: LinearLayout
+
     private lateinit var tvClearCategory: TextView
     private lateinit var tvApplyCategory: TextView
+
     private lateinit var boardgameAdapter: BoardgameAdapter
+
+    // =========================================================
+    // Booking Data
+    // =========================================================
+
+    private var selectedDate = ""
+    private var startTime = ""
+    private var endTime = ""
+    private var selectedTable = ""
+    private var playerCount = 0
+    private var playMode = "hourly"
+
+    // =========================================================
+    // Filter / Sort
+    // =========================================================
 
     private var currentSort = "ความนิยม"
 
-    private val selectedCategories = mutableSetOf<String>()
+    private val selectedCategories =
+        mutableSetOf<String>()
 
     private val allCategories = listOf(
         "Abstract",
@@ -79,6 +105,51 @@ class Booking1_3Fragment : Fragment() {
         "Word Game"
     )
 
+    // =========================================================
+    // Lifecycle
+    // =========================================================
+
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) {
+        super.onCreate(savedInstanceState)
+
+        // =========================
+        // รับข้อมูลจาก Booking 1.2
+        // =========================
+
+        selectedDate =
+            arguments?.getString(
+                "selectedDate"
+            ) ?: ""
+
+        startTime =
+            arguments?.getString(
+                "startTime"
+            ) ?: ""
+
+        endTime =
+            arguments?.getString(
+                "endTime"
+            ) ?: ""
+
+        selectedTable =
+            arguments?.getString(
+                "selectedTable"
+            ) ?: ""
+
+        playerCount =
+            arguments?.getInt(
+                "playerCount",
+                0
+            ) ?: 0
+
+        playMode =
+            arguments?.getString(
+                "playMode"
+            ) ?: "hourly"
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -92,212 +163,136 @@ class Booking1_3Fragment : Fragment() {
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
     ) {
+        super.onViewCreated(
+            view,
+            savedInstanceState
+        )
 
-        super.onViewCreated(view, savedInstanceState)
-
-        // =========================
-        // เชื่อม View
-        // =========================
+        // =====================================================
+        // Find Views
+        // =====================================================
 
         recyclerBoardgame =
-            view.findViewById(R.id.recyclerBoardgame)
+            view.findViewById(
+                R.id.recyclerBoardgame
+            )
 
         etSearch =
-            view.findViewById(R.id.etSearch)
+            view.findViewById(
+                R.id.etSearch
+            )
 
         tvGameCount =
-            view.findViewById(R.id.tvGameCount)
+            view.findViewById(
+                R.id.tvGameCount
+            )
 
         tvSort =
-            view.findViewById(R.id.tvSort)
+            view.findViewById(
+                R.id.tvSort
+            )
 
         tvCategoryFilter =
-            view.findViewById(R.id.tvCategoryFilter)
+            view.findViewById(
+                R.id.tvCategoryFilter
+            )
 
         categoryFilterContainer =
-            view.findViewById(R.id.categoryFilterContainer)
+            view.findViewById(
+                R.id.categoryFilterContainer
+            )
 
         categoryCheckboxContainer =
-            view.findViewById(R.id.categoryCheckboxContainer)
+            view.findViewById(
+                R.id.categoryCheckboxContainer
+            )
 
         tvClearCategory =
-            view.findViewById(R.id.tvClearCategory)
+            view.findViewById(
+                R.id.tvClearCategory
+            )
 
         tvApplyCategory =
-            view.findViewById(R.id.tvApplyCategory)
+            view.findViewById(
+                R.id.tvApplyCategory
+            )
 
-
-        // =========================
+        // =====================================================
         // RecyclerView
-        // =========================
+        // =====================================================
 
         recyclerBoardgame.layoutManager =
-            LinearLayoutManager(requireContext())
-
-
-        // =========================
-        // ข้อมูลเกม
-        // ใช้ข้อมูลชุดเดียวกับ BoardgameFragment
-        // =========================
+            LinearLayoutManager(
+                requireContext()
+            )
 
         val gameList =
             BoardGameData.gameList
 
-
-        // =========================
+        // =====================================================
         // Adapter
-        // =========================
+        // =====================================================
 
         boardgameAdapter =
-            BoardgameAdapter(gameList) { game ->
+            BoardgameAdapter(
+                gameList
+            ) { game ->
 
-                val bundle = Bundle().apply {
-
-                    // ข้อมูลเกม
-                    putString(
-                        "name",
-                        game.name
-                    )
-
-                    putString(
-                        "category",
-                        game.categories.joinToString(" • ")
-                    )
-
-                    putString(
-                        "players",
-                        game.players
-                    )
-
-                    putString(
-                        "playTime",
-                        game.playTime
-                    )
-
-                    putString(
-                        "description",
-                        game.description
-                    )
-
-                    putInt(
-                        "imageResId",
-                        game.imageResId
-                    )
-
-                    // =========================
-                    // ข้อมูลจาก Booking
-                    // =========================
-
-                    putString(
-                        "selectedDate",
-                        arguments?.getString(
-                            "selectedDate",
-                            ""
-                        )
-                    )
-
-                    putString(
-                        "startTime",
-                        arguments?.getString(
-                            "startTime",
-                            "20:00"
-                        )
-                    )
-
-                    putString(
-                        "endTime",
-                        arguments?.getString(
-                            "endTime",
-                            "22:00"
-                        )
-                    )
-
-                    putInt(
-                        "playerCount",
-                        arguments?.getInt(
-                            "playerCount",
-                            0
-                        ) ?: 0
-                    )
-
-                    putString(
-                        "playMode",
-                        arguments?.getString(
-                            "playMode",
-                            "hourly"
-                        )
-                    )
-
-                    putString(
-                        "selectedTable",
-                        arguments?.getString(
-                            "selectedTable",
-                            ""
-                        ) ?: ""
-                    )
-                }
-
-                findNavController().navigate(
-                    R.id.booking1_3GameDetailFragment,
-                    bundle
-                )
+                openGameDetail(game)
             }
 
         recyclerBoardgame.adapter =
             boardgameAdapter
 
-
-        // =========================
-        // สร้าง CheckBox หมวดหมู่
-        // =========================
+        // =====================================================
+        // Category Checkboxes
+        // =====================================================
 
         setupCategoryCheckboxes()
 
-
-        // =========================
-        // แสดงเกมเริ่มต้น
-        // =========================
+        // =====================================================
+        // แสดงรายการเริ่มต้น
+        // =====================================================
 
         updateGameList(gameList)
 
-
-        // =========================
-        // เปิด / ปิด Filter
-        // =========================
+        // =====================================================
+        // Category Filter
+        // =====================================================
 
         tvCategoryFilter.setOnClickListener {
 
-            if (categoryFilterContainer.visibility ==
-                View.VISIBLE
-            ) {
-
-                categoryFilterContainer.visibility =
+            categoryFilterContainer.visibility =
+                if (
+                    categoryFilterContainer.isVisible
+                ) {
                     View.GONE
-
-            } else {
-
-                categoryFilterContainer.visibility =
+                } else {
                     View.VISIBLE
-            }
+                }
         }
 
-
-        // =========================
-        // ล้างหมวดหมู่
-        // =========================
+        // =====================================================
+        // Clear Category
+        // =====================================================
 
         tvClearCategory.setOnClickListener {
 
             selectedCategories.clear()
 
-            for (i in 0 until categoryCheckboxContainer.childCount) {
+            for (
+            i in 0 until
+                    categoryCheckboxContainer.childCount
+            ) {
 
                 val child =
-                    categoryCheckboxContainer.getChildAt(i)
+                    categoryCheckboxContainer
+                        .getChildAt(i)
 
                 if (child is CheckBox) {
                     child.isChecked = false
@@ -307,10 +302,9 @@ class Booking1_3Fragment : Fragment() {
             updateGameList(gameList)
         }
 
-
-        // =========================
-        // เสร็จสิ้น
-        // =========================
+        // =====================================================
+        // Apply Category
+        // =====================================================
 
         tvApplyCategory.setOnClickListener {
 
@@ -320,10 +314,9 @@ class Booking1_3Fragment : Fragment() {
             updateGameList(gameList)
         }
 
-
-        // =========================
+        // =====================================================
         // Sort
-        // =========================
+        // =====================================================
 
         tvSort.setOnClickListener {
 
@@ -333,10 +326,21 @@ class Booking1_3Fragment : Fragment() {
                     tvSort
                 )
 
-            popup.menu.add("ความนิยม")
-            popup.menu.add("A-Z")
-            popup.menu.add("Z-A")
-            popup.menu.add("มาใหม่")
+            popup.menu.add(
+                "ความนิยม"
+            )
+
+            popup.menu.add(
+                "A-Z"
+            )
+
+            popup.menu.add(
+                "Z-A"
+            )
+
+            popup.menu.add(
+                "มาใหม่"
+            )
 
             popup.setOnMenuItemClickListener { item ->
 
@@ -344,7 +348,7 @@ class Booking1_3Fragment : Fragment() {
                     item.title.toString()
 
                 tvSort.text =
-                    "${currentSort}  ▾"
+                    "$currentSort  ▾"
 
                 updateGameList(gameList)
 
@@ -354,10 +358,9 @@ class Booking1_3Fragment : Fragment() {
             popup.show()
         }
 
-
-        // =========================
+        // =====================================================
         // Search
-        // =========================
+        // =====================================================
 
         etSearch.addTextChangedListener(
             object : TextWatcher {
@@ -376,7 +379,6 @@ class Booking1_3Fragment : Fragment() {
                     before: Int,
                     count: Int
                 ) {
-
                     updateGameList(gameList)
                 }
 
@@ -387,36 +389,137 @@ class Booking1_3Fragment : Fragment() {
             }
         )
 
+        // =====================================================
+        // Back
+        // =====================================================
 
-        // =========================
-        // ปุ่มย้อนกลับ
-        // =========================
+        view.findViewById<View>(
+            R.id.btnBack
+        ).setOnClickListener {
 
-        view.findViewById<View>(R.id.btnBack)
-            .setOnClickListener {
-
-                findNavController()
-                    .popBackStack()
-            }
+            findNavController()
+                .popBackStack()
+        }
     }
 
+    // =========================================================
+    // เปิดหน้า Game Detail
+    // =========================================================
 
-    // =====================================================
-    // สร้าง CheckBox หมวดหมู่
-    // =====================================================
+    private fun openGameDetail(
+        game: BoardGame
+    ) {
+
+        val bundle =
+            Bundle().apply {
+
+                // =========================
+                // ข้อมูลเกม
+                // =========================
+
+                putString(
+                    "name",
+                    game.name
+                )
+
+                putStringArray(
+                    "categories",
+                    game.categories.toTypedArray()
+                )
+
+                putString(
+                    "players",
+                    game.players
+                )
+
+                putString(
+                    "playTime",
+                    game.playTime
+                )
+
+                putString(
+                    "description",
+                    game.description
+                )
+
+                putInt(
+                    "imageResId",
+                    game.imageResId
+                )
+
+                // =========================
+                // ระบุว่ามาจาก Booking
+                // =========================
+
+                putBoolean(
+                    "fromBooking",
+                    true
+                )
+
+                // =========================
+                // ข้อมูล Booking
+                // =========================
+
+                putString(
+                    "selectedDate",
+                    selectedDate
+                )
+
+                putString(
+                    "startTime",
+                    startTime
+                )
+
+                putString(
+                    "endTime",
+                    endTime
+                )
+
+                putString(
+                    "selectedTable",
+                    selectedTable
+                )
+
+                putInt(
+                    "playerCount",
+                    playerCount
+                )
+
+                putString(
+                    "playMode",
+                    playMode
+                )
+            }
+
+        findNavController().navigate(
+            R.id.boardgameDetailFragment,
+            bundle
+        )
+    }
+
+    // =========================================================
+    // สร้าง Category Checkboxes
+    // =========================================================
 
     private fun setupCategoryCheckboxes() {
 
-        categoryCheckboxContainer.removeAllViews()
+        categoryCheckboxContainer
+            .removeAllViews()
 
-        for (category in allCategories) {
+        for (
+        category in allCategories
+        ) {
 
             val checkBox =
-                CheckBox(requireContext())
+                CheckBox(
+                    requireContext()
+                )
 
-            checkBox.text = category
+            checkBox.text =
+                category
 
-            checkBox.textSize = 13f
+            checkBox.textSize =
+                13f
 
             checkBox.setTextColor(
                 resources.getColor(
@@ -426,27 +529,23 @@ class Booking1_3Fragment : Fragment() {
             )
 
             checkBox.isChecked =
-                selectedCategories.contains(category)
+                selectedCategories
+                    .contains(category)
 
             checkBox.setOnCheckedChangeListener {
-                    _, isChecked ->
+                    _,
+                    isChecked ->
 
                 if (isChecked) {
 
-                    selectedCategories.add(
-                        category
-                    )
+                    selectedCategories
+                        .add(category)
 
                 } else {
 
-                    selectedCategories.remove(
-                        category
-                    )
+                    selectedCategories
+                        .remove(category)
                 }
-
-                updateGameList(
-                    BoardGameData.gameList
-                )
             }
 
             val params =
@@ -470,13 +569,13 @@ class Booking1_3Fragment : Fragment() {
         }
     }
 
+    // =========================================================
+    // Filter + Sort
+    // =========================================================
 
-    // =====================================================
-    // กรอง + เรียงเกม
-    // =====================================================
-
+    @SuppressLint("SetTextI18n")
     private fun updateGameList(
-        gameList: List<com.diceplanet.app.ui.boardgame.BoardGame>
+        gameList: List<BoardGame>
     ) {
 
         val keyword =
@@ -484,13 +583,12 @@ class Booking1_3Fragment : Fragment() {
                 .toString()
                 .trim()
 
+        // =========================
+        // Search
+        // =========================
 
         val filteredList =
             gameList.filter { game ->
-
-                // =========================
-                // Search
-                // =========================
 
                 val matchSearch =
                     keyword.isEmpty() ||
@@ -499,36 +597,28 @@ class Booking1_3Fragment : Fragment() {
                                 ignoreCase = true
                             ) ||
                             game.categories.any {
+
                                 it.contains(
                                     keyword,
                                     ignoreCase = true
                                 )
                             }
 
-
                 // =========================
                 // Category
-                //
-                // AND
-                //
-                // Family + Puzzle
-                // ต้องมีทั้ง Family และ Puzzle
                 // =========================
 
                 val matchCategory =
                     selectedCategories.isEmpty() ||
                             selectedCategories.all { category ->
 
-                                game.categories.contains(
-                                    category
-                                )
+                                game.categories
+                                    .contains(category)
                             }
-
 
                 matchSearch &&
                         matchCategory
             }
-
 
         // =========================
         // Sort
@@ -538,50 +628,43 @@ class Booking1_3Fragment : Fragment() {
             when (currentSort) {
 
                 "ความนิยม" ->
-
-                    filteredList.sortedByDescending {
-                        it.popularity
-                    }
-
+                    filteredList
+                        .sortedByDescending {
+                            it.popularity
+                        }
 
                 "A-Z" ->
-
-                    filteredList.sortedBy {
-                        it.name
-                    }
-
+                    filteredList
+                        .sortedBy {
+                            it.name
+                        }
 
                 "Z-A" ->
-
-                    filteredList.sortedByDescending {
-                        it.name
-                    }
-
+                    filteredList
+                        .sortedByDescending {
+                            it.name
+                        }
 
                 "มาใหม่" ->
-
-                    filteredList.sortedByDescending {
-                        it.isNew
-                    }
-
+                    filteredList
+                        .sortedByDescending {
+                            it.isNew
+                        }
 
                 else ->
-
                     filteredList
             }
 
-
         // =========================
-        // อัปเดต RecyclerView
+        // Update RecyclerView
         // =========================
 
         boardgameAdapter.updateList(
             sortedList
         )
 
-
         // =========================
-        // จำนวนเกม
+        // Game Count
         // =========================
 
         tvGameCount.text =

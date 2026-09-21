@@ -1,5 +1,6 @@
 package com.diceplanet.app.ui.boardgame
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.diceplanet.app.R
+import androidx.core.view.isVisible
 
 class BoardgameFragment : Fragment() {
 
@@ -126,6 +128,7 @@ class BoardgameFragment : Fragment() {
     // หลังสร้าง View
     // =========================
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
@@ -237,11 +240,9 @@ class BoardgameFragment : Fragment() {
                             game.name
                         )
 
-                        putString(
-                            "category",
-                            game.categories.joinToString(
-                                " • "
-                            )
+                        putStringArray(
+                            "categories",
+                            game.categories.toTypedArray()
                         )
 
                         putString(
@@ -264,7 +265,6 @@ class BoardgameFragment : Fragment() {
                             game.imageResId
                         )
                     }
-
 
                 findNavController().navigate(
                     R.id.boardgameDetailFragment,
@@ -298,8 +298,7 @@ class BoardgameFragment : Fragment() {
         tvCategoryFilter.setOnClickListener {
 
             if (
-                categoryFilterContainer.visibility
-                == View.VISIBLE
+                categoryFilterContainer.isVisible
             ) {
 
                 categoryFilterContainer.visibility =
@@ -523,6 +522,7 @@ class BoardgameFragment : Fragment() {
     // กรอง + เรียงเกม
     // =========================
 
+    @SuppressLint("SetTextI18n")
     private fun updateGameList(
         gameList: List<BoardGame>
     ) {

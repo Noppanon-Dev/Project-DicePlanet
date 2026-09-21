@@ -18,6 +18,7 @@ class Booking1_5Fragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         return inflater.inflate(
             R.layout.fragment_booking1_5,
             container,
@@ -29,22 +30,38 @@ class Booking1_5Fragment : Fragment() {
         view: View,
         savedInstanceState: Bundle?
     ) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(
+            view,
+            savedInstanceState
+        )
+
+        // =====================================================
+        // Booking ID
+        // =====================================================
 
         tvBookingId =
-            view.findViewById(R.id.tvBookingId)
+            view.findViewById(
+                R.id.tvBookingId
+            )
 
-        val booking = BookingManager.currentBooking
+        val booking =
+            BookingManager.currentBooking
 
         tvBookingId.text =
-            booking?.bookingId ?: "#DP00000000000"
+            booking?.bookingId
+                ?: "#DP00000000000"
 
-        view.findViewById<View>(R.id.btnBackHome)
-            .setOnClickListener {
+        // =====================================================
+        // กลับหน้าหลัก
+        // =====================================================
 
-                findNavController().navigate(
-                    R.id.bookingFragment
-                )
-            }
+        view.findViewById<View>(
+            R.id.btnBackHome
+        ).setOnClickListener {
+
+            findNavController().navigate(
+                R.id.bookingFragment
+            )
+        }
     }
 }

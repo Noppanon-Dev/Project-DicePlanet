@@ -12,8 +12,8 @@ android {
         applicationId = "com.diceplanet.app"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,27 +44,12 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
-
-    // Lifecycle / ViewModel
-    implementation(libs.androidx.lifecycle.viewmodel)
-    implementation(libs.androidx.lifecycle.runtime)
 
     // RecyclerView
     implementation(libs.androidx.recyclerview)
 
     // Retrofit
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.gson)
-
-    // OkHttp
-    implementation(libs.okhttp.logging)
-
-    // Gson
-    implementation(libs.gson)
-
-    // Glide
-    implementation(libs.glide)
+    implementation("androidx.palette:palette-ktx:1.0.0")
 
     // Tests
     testImplementation(libs.junit)

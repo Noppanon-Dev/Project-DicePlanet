@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/bg_booking_detail_dialog">
+
+    <!-- ========================= -->
+    <!-- Header -->
+    <!-- ========================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvDialogTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="รายละเอียดการจอง"
+                android:textColor="#222222"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDialogBookingId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="#DP00000000000"
+                android:textColor="#777777"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDialogStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:text="รอการยืนยัน"
+            android:textColor="#9A6B00"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_booking_status" />
+
+    </LinearLayout>
+
+
+    <!-- ========================= -->
+    <!-- Divider -->
+    <!-- ========================= -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="16dp"
+        android:background="#EEEEEE" />
+
+
+    <!-- ========================= -->
+    <!-- วันที่ -->
+    <!-- ========================= -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="วันที่"
+        android:textColor="#888888"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/tvDialogDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="16 กันยายน 2026"
+        android:textColor="#222222"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <!-- ========================= -->
+    <!-- เวลา -->
+    <!-- ========================= -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="เวลา"
+        android:textColor="#888888"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/tvDialogTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="เหมาวัน"
+        android:textColor="#222222"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <!-- ========================= -->
+    <!-- โต๊ะ -->
+    <!-- ========================= -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="โต๊ะ"
+        android:textColor="#888888"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/tvDialogTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="ชั้น 1 - A2"
+        android:textColor="#222222"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <!-- ========================= -->
+    <!-- จำนวนผู้เล่น -->
+    <!-- ========================= -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="จำนวนผู้เล่น"
+        android:textColor="#888888"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/tvDialogPlayers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="2 คน"
+        android:textColor="#222222"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <!-- ========================= -->
+    <!-- เกม -->
+    <!-- ========================= -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="เกม"
+        android:textColor="#888888"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/tvDialogGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="Dixit"
+        android:textColor="#222222"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <!-- ========================= -->
+    <!-- Divider -->
+    <!-- ========================= -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="16dp"
+        android:background="#EEEEEE" />
+
+
+    <!-- ========================= -->
+    <!-- Contact -->
+    <!-- ========================= -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ข้อมูลผู้จอง"
+        android:textColor="#888888"
+        android:textSize="11sp" />
+
+    <TextView
+        android:id="@+id/tvDialogContactName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="สุดหล่อ ต่อเติม"
+        android:textColor="#222222"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tvDialogContactPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="081-222-3333"
+        android:textColor="#222222"
+        android:textSize="14sp" />
+
+
+    <!-- ========================= -->
+    <!-- Close -->
+    <!-- ========================= -->
+
+    <TextView
+        android:id="@+id/btnDialogClose"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_dialog_close_button"
+        android:gravity="center"
+        android:text="ปิด"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

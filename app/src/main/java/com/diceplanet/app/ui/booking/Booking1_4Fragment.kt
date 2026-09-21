@@ -21,6 +21,7 @@ class Booking1_4Fragment : Fragment() {
     private var selectedTable = ""
     private var playerCount = 0
     private var gameName = ""
+    private var playMode = "hourly"
 
     private var contactName = "สุดหล่อ ต่อเติม"
     private var contactPhone = "081-222-3333"
@@ -36,26 +37,41 @@ class Booking1_4Fragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // =========================
+        // ข้อมูลการจอง
+        // =========================
+
         selectedDate =
-            arguments?.getString("selectedDate", "") ?: ""
+            arguments?.getString("selectedDate") ?: ""
 
         startTime =
-            arguments?.getString("startTime", "") ?: ""
+            arguments?.getString("startTime") ?: ""
 
         endTime =
-            arguments?.getString("endTime", "") ?: ""
+            arguments?.getString("endTime") ?: ""
 
         selectedTable =
-            arguments?.getString("selectedTable", "") ?: ""
+            arguments?.getString("selectedTable") ?: ""
+
+        playMode =
+            arguments?.getString("playMode") ?: "hourly"
 
         playerCount =
             arguments?.getInt("playerCount", 0) ?: 0
 
-        gameName =
-            arguments?.getString("name", "") ?: ""
+        // =========================
+        // ข้อมูลเกม
+        // =========================
 
-        // ข้อมูลจำลอง
-        // อนาคตเปลี่ยนตรงนี้ให้ดึงข้อมูลจากบัญชีที่ Login ได้
+        gameName =
+            arguments?.getString("name") ?: ""
+
+        // =========================
+        // ข้อมูลติดต่อ
+        // =========================
+        // ตอนนี้ใช้ข้อมูลจำลอง
+        // อนาคตสามารถเปลี่ยนเป็นข้อมูลจากบัญชีที่ Login ได้
+
         loadContactInfo()
     }
 
@@ -78,6 +94,10 @@ class Booking1_4Fragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        // =========================
+        // Find Views
+        // =========================
+
         tvSelectedDate =
             view.findViewById(R.id.tvSelectedDate)
 
@@ -99,36 +119,70 @@ class Booking1_4Fragment : Fragment() {
         tvContactPhone =
             view.findViewById(R.id.tvContactPhone)
 
+        // =========================
+        // แสดงข้อมูลการจอง
+        // =========================
+
         tvSelectedDate.text =
             formatDate(selectedDate)
 
         tvSelectedTime.text =
+            if (playMode == "fullDay") {
+            "เหมาวัน"
+        } else {
             "$startTime - $endTime"
+        }
 
         tvSelectedTable.text =
-            if (selectedTable.startsWith("A")) {
+            if (selectedTable.isEmpty()) {
+                "-"
+            } else if (selectedTable.startsWith("A")) {
                 "ชั้น 1 - $selectedTable"
             } else {
                 "ชั้น 2 - $selectedTable"
             }
 
         tvPlayerCount.text =
-            "$playerCount คน"
+            if (playerCount > 0) {
+                "$playerCount คน"
+            } else {
+                "-"
+            }
 
         tvSelectedGame.text =
-            gameName
+            if (gameName.isNotEmpty()) {
+                gameName
+            } else {
+                "-"
+            }
+
+        // =========================
+        // แสดงข้อมูลติดต่อ
+        // =========================
 
         updateContactUI()
+
+        // =========================
+        // ปุ่มย้อนกลับ
+        // =========================
 
         view.findViewById<View>(R.id.btnBack)
             .setOnClickListener {
                 findNavController().navigateUp()
             }
 
+        // =========================
+        // ปุ่มแก้ไขข้อมูลติดต่อ
+        // =========================
+
         view.findViewById<TextView>(R.id.btnEditContact)
             .setOnClickListener {
                 showEditContactDialog()
             }
+
+        // =========================
+        // ปุ่มยืนยันการจอง
+        // =========================
 
         view.findViewById<View>(R.id.btnConfirmBooking)
             .setOnClickListener {
@@ -141,7 +195,8 @@ class Booking1_4Fragment : Fragment() {
                     playerCount = playerCount,
                     gameName = gameName,
                     contactName = contactName,
-                    contactPhone = contactPhone
+                    contactPhone = contactPhone,
+                    playMode = playMode
                 )
 
                 findNavController().navigate(
@@ -150,84 +205,163 @@ class Booking1_4Fragment : Fragment() {
             }
     }
 
+    // =========================================================
+    // CONTACT
+    // =========================================================
+
     private fun loadContactInfo() {
-        // ตอนนี้ใช้ข้อมูลจำลอง
-        // อนาคตสามารถเปลี่ยนเป็นข้อมูลจาก User ที่ Login ได้
+
+        // ข้อมูลจำลองในตอนนี้
+        //
+        // อนาคตสามารถเปลี่ยนเป็น
+        // ข้อมูลของ User ที่ Login อยู่ได้
     }
 
     private fun updateContactUI() {
-        tvContactName.text = contactName
-        tvContactPhone.text = contactPhone
+
+        tvContactName.text =
+            contactName
+
+        tvContactPhone.text =
+            contactPhone
     }
 
     private fun showEditContactDialog() {
 
-        val layout = LinearLayout(requireContext())
+        val layout =
+            LinearLayout(requireContext())
 
-        layout.orientation = LinearLayout.VERTICAL
-        layout.setPadding(50, 0, 50, 0)
+        layout.orientation =
+            LinearLayout.VERTICAL
 
-        val nameInput = EditText(requireContext())
-        nameInput.hint = "ชื่อ"
-        nameInput.setText(contactName)
+        layout.setPadding(
+            50,
+            0,
+            50,
+            0
+        )
 
-        val phoneInput = EditText(requireContext())
-        phoneInput.hint = "เบอร์โทร"
-        phoneInput.setText(contactPhone)
+        // =========================
+        // ชื่อ
+        // =========================
+
+        val nameInput =
+            EditText(requireContext())
+
+        nameInput.hint =
+            "ชื่อ"
+
+        nameInput.setText(
+            contactName
+        )
+
+        // =========================
+        // เบอร์โทร
+        // =========================
+
+        val phoneInput =
+            EditText(requireContext())
+
+        phoneInput.hint =
+            "เบอร์โทร"
+
+        phoneInput.setText(
+            contactPhone
+        )
+
         phoneInput.inputType =
             InputType.TYPE_CLASS_PHONE
 
-        layout.addView(nameInput)
-        layout.addView(phoneInput)
+        layout.addView(
+            nameInput
+        )
 
-        AlertDialog.Builder(requireContext())
-            .setTitle("แก้ไขข้อมูลติดต่อ")
-            .setView(layout)
-            .setNegativeButton("ยกเลิก", null)
-            .setPositiveButton("บันทึก") { _, _ ->
+        layout.addView(
+            phoneInput
+        )
+
+        // =========================
+        // Dialog
+        // =========================
+
+        AlertDialog.Builder(
+            requireContext()
+        )
+            .setTitle(
+                "แก้ไขข้อมูลติดต่อ"
+            )
+            .setView(
+                layout
+            )
+            .setNegativeButton(
+                "ยกเลิก",
+                null
+            )
+            .setPositiveButton(
+                "บันทึก"
+            ) { _, _ ->
 
                 contactName =
-                    nameInput.text.toString()
+                    nameInput.text
+                        .toString()
+                        .trim()
 
                 contactPhone =
-                    phoneInput.text.toString()
+                    phoneInput.text
+                        .toString()
+                        .trim()
 
                 updateContactUI()
             }
             .show()
     }
 
-    private fun formatDate(date: String): String {
+    // =========================================================
+    // FORMAT DATE
+    // =========================================================
+
+    private fun formatDate(
+        date: String
+    ): String {
 
         if (date.isEmpty()) {
             return "-"
         }
 
-        val parts = date.split("/")
+        val parts =
+            date.split("/")
 
         if (parts.size != 3) {
             return date
         }
 
-        val day = parts[0]
-        val month = parts[1]
-        val year = parts[2]
+        val day =
+            parts[0]
 
-        val monthName = when (month) {
-            "01" -> "มกราคม"
-            "02" -> "กุมภาพันธ์"
-            "03" -> "มีนาคม"
-            "04" -> "เมษายน"
-            "05" -> "พฤษภาคม"
-            "06" -> "มิถุนายน"
-            "07" -> "กรกฎาคม"
-            "08" -> "สิงหาคม"
-            "09" -> "กันยายน"
-            "10" -> "ตุลาคม"
-            "11" -> "พฤศจิกายน"
-            "12" -> "ธันวาคม"
-            else -> month
-        }
+        val month =
+            parts[1]
+
+        val year =
+            parts[2]
+
+        val monthName =
+            when (month) {
+
+                "01" -> "มกราคม"
+                "02" -> "กุมภาพันธ์"
+                "03" -> "มีนาคม"
+                "04" -> "เมษายน"
+                "05" -> "พฤษภาคม"
+                "06" -> "มิถุนายน"
+                "07" -> "กรกฎาคม"
+                "08" -> "สิงหาคม"
+                "09" -> "กันยายน"
+                "10" -> "ตุลาคม"
+                "11" -> "พฤศจิกายน"
+                "12" -> "ธันวาคม"
+
+                else -> month
+            }
 
         return "$day $monthName $year"
     }

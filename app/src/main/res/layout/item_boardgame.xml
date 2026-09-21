@@ -17,7 +17,7 @@
         android:id="@+id/imgGame"
         android:layout_width="82dp"
         android:layout_height="82dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:src="@drawable/dice_planet_logo_nobg"
         android:contentDescription="รูปบอร์ดเกม" />
 

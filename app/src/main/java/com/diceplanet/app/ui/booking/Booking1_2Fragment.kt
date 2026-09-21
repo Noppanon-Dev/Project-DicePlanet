@@ -1,5 +1,6 @@
 package com.diceplanet.app.ui.booking
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,9 +25,15 @@ class Booking1_2Fragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // รับจำนวนผู้เล่นจาก Booking 1.1
-        playerCount = arguments?.getInt("playerCount", 0) ?: 0
-        playMode = arguments?.getString("playMode", "hourly") ?: "hourly"
+        // =========================
+        // รับข้อมูลจาก Booking 1.1
+        // =========================
+
+        playerCount =
+            arguments?.getInt("playerCount", 0) ?: 0
+
+        playMode =
+            arguments?.getString("playMode") ?: "hourly"
     }
 
     override fun onCreateView(
@@ -34,6 +41,7 @@ class Booking1_2Fragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         return inflater.inflate(
             R.layout.fragment_booking1_2,
             container,
@@ -41,161 +49,209 @@ class Booking1_2Fragment : Fragment() {
         )
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?
     ) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(
+            view,
+            savedInstanceState
+        )
 
-        floor1Container = view.findViewById(R.id.floor1Container)
-        floor2Container = view.findViewById(R.id.floor2Container)
-        tvPlayerCount = view.findViewById(R.id.tvPlayerCount)
+        // =========================
+        // Find Views
+        // =========================
 
+        floor1Container =
+            view.findViewById(R.id.floor1Container)
+
+        floor2Container =
+            view.findViewById(R.id.floor2Container)
+
+        tvPlayerCount =
+            view.findViewById(R.id.tvPlayerCount)
+
+        // =========================
         // แสดงจำนวนผู้เล่น
-        tvPlayerCount.text = "จำนวนผู้เล่น: $playerCount คน"
+        // =========================
 
+        tvPlayerCount.text =
+            "จำนวนผู้เล่น: $playerCount คน"
+
+        // =========================
         // สร้างโต๊ะ
+        // =========================
+
         createTables()
 
+        // =========================
         // ปุ่มย้อนกลับ
-        view.findViewById<View>(R.id.btnBack).setOnClickListener {
+        // =========================
 
-            val bundle = Bundle().apply {
-                putString(
-                    "selectedDate",
-                    arguments?.getString("selectedDate", "") ?: ""
+        view.findViewById<View>(R.id.btnBack)
+            .setOnClickListener {
+
+                val bundle =
+                    createBookingBundle()
+
+                parentFragmentManager.setFragmentResult(
+                    "booking1_2_result",
+                    bundle
                 )
 
-                putString(
-                    "startTime",
-                    arguments?.getString("startTime", "20:00") ?: "20:00"
-                )
-
-                putString(
-                    "endTime",
-                    arguments?.getString("endTime", "22:00") ?: "22:00"
-                )
-
-                putInt(
-                    "playerCount",
-                    arguments?.getInt("playerCount", 0) ?: 0
-                )
-
-                putString(
-                    "playMode",
-                    arguments?.getString("playMode", "hourly") ?: "hourly"
-                )
+                findNavController()
+                    .popBackStack()
             }
 
-            parentFragmentManager.setFragmentResult(
-                "booking1_2_result",
-                bundle
+        // =========================
+        // ปุ่มถัดไป
+        // =========================
+
+        view.findViewById<View>(R.id.btnNext)
+            .setOnClickListener {
+
+                // ต้องเลือกโต๊ะก่อน
+                if (selectedTable == null) {
+                    return@setOnClickListener
+                }
+
+                val bundle =
+                    createBookingBundle()
+
+                findNavController().navigate(
+                    R.id.booking1_3Fragment,
+                    bundle
+                )
+            }
+    }
+
+    // =========================================================
+    // สร้าง Bundle สำหรับ Booking
+    // =========================================================
+
+    private fun createBookingBundle(): Bundle {
+
+        return Bundle().apply {
+
+            // วันที่
+            putString(
+                "selectedDate",
+                arguments?.getString(
+                    "selectedDate"
+                ) ?: ""
             )
 
-            findNavController().popBackStack()
-        }
+            // เวลาเริ่ม
+            putString(
+                "startTime",
+                arguments?.getString(
+                    "startTime"
+                ) ?: ""
+            )
 
+            // เวลาสิ้นสุด
+            putString(
+                "endTime",
+                arguments?.getString(
+                    "endTime"
+                ) ?: ""
+            )
 
-// ปุ่มถัดไป
-        view.findViewById<View>(R.id.btnNext).setOnClickListener {
+            // จำนวนผู้เล่น
+            putInt(
+                "playerCount",
+                playerCount
+            )
 
-            // ต้องเลือกโต๊ะก่อน
-            if (selectedTable == null) {
-                return@setOnClickListener
-            }
+            // รูปแบบการเล่น
+            putString(
+                "playMode",
+                playMode
+            )
 
-            val bundle = Bundle().apply {
-                putString(
-                    "selectedDate",
-                    arguments?.getString("selectedDate", "") ?: ""
-                )
-
-                putString(
-                    "startTime",
-                    arguments?.getString("startTime", "20:00") ?: "20:00"
-                )
-
-                putString(
-                    "endTime",
-                    arguments?.getString("endTime", "22:00") ?: "22:00"
-                )
-
-                putInt(
-                    "playerCount",
-                    playerCount
-                )
-
-                putString(
-                    "playMode",
-                    playMode
-                )
-
-                putString(
-                    "selectedTable",
-                    selectedTable?.findViewById<TextView>(R.id.tvTableName)?.text?.toString() ?: ""
-                )
-            }
-
-            findNavController().navigate(
-                R.id.booking1_3Fragment,
-                bundle
+            // โต๊ะที่เลือก
+            putString(
+                "selectedTable",
+                selectedTable
+                    ?.findViewById<TextView>(
+                        R.id.tvTableName
+                    )
+                    ?.text
+                    ?.toString()
+                    ?: ""
             )
         }
     }
+
+    // =========================================================
+    // สร้างโต๊ะ
+    // =========================================================
 
     private fun createTables() {
 
+        // =========================
         // ชั้น 1
+        // =========================
+
         addTable(
-            floor1Container,
-            "A1",
-            2,
-            4,
-            false
+            container = floor1Container,
+            tableName = "A1",
+            minPlayers = 2,
+            maxPlayers = 4,
+            booked = false
         )
 
         addTable(
-            floor1Container,
-            "A2",
-            2,
-            4,
-            false
+            container = floor1Container,
+            tableName = "A2",
+            minPlayers = 2,
+            maxPlayers = 4,
+            booked = false
         )
 
         addTable(
-            floor1Container,
-            "A3",
-            4,
-            6,
-            false
+            container = floor1Container,
+            tableName = "A3",
+            minPlayers = 4,
+            maxPlayers = 6,
+            booked = false
         )
 
+        // =========================
         // ชั้น 2
+        // =========================
+
         addTable(
-            floor2Container,
-            "B1",
-            2,
-            4,
-            false
+            container = floor2Container,
+            tableName = "B1",
+            minPlayers = 2,
+            maxPlayers = 4,
+            booked = false
         )
 
         addTable(
-            floor2Container,
-            "B2",
-            5,
-            7,
-            true
+            container = floor2Container,
+            tableName = "B2",
+            minPlayers = 5,
+            maxPlayers = 7,
+            booked = true
         )
 
         addTable(
-            floor2Container,
-            "B3",
-            3,
-            6,
-            true
+            container = floor2Container,
+            tableName = "B3",
+            minPlayers = 3,
+            maxPlayers = 6,
+            booked = true
         )
     }
 
+    // =========================================================
+    // เพิ่มโต๊ะ
+    // =========================================================
+
+    @SuppressLint("SetTextI18n")
     private fun addTable(
         container: LinearLayout,
         tableName: String,
@@ -204,26 +260,43 @@ class Booking1_2Fragment : Fragment() {
         booked: Boolean
     ) {
 
-        val tableView = LayoutInflater.from(requireContext())
-            .inflate(
-                R.layout.item_booking_table,
-                container,
-                false
-            )
+        val tableView =
+            LayoutInflater.from(requireContext())
+                .inflate(
+                    R.layout.item_booking_table,
+                    container,
+                    false
+                )
 
         val tableItem =
-            tableView.findViewById<LinearLayout>(R.id.tableItem)
+            tableView.findViewById<LinearLayout>(
+                R.id.tableItem
+            )
 
         val tvTableName =
-            tableView.findViewById<TextView>(R.id.tvTableName)
+            tableView.findViewById<TextView>(
+                R.id.tvTableName
+            )
 
         val tvTableCapacity =
-            tableView.findViewById<TextView>(R.id.tvTableCapacity)
+            tableView.findViewById<TextView>(
+                R.id.tvTableCapacity
+            )
 
-        tvTableName.text = tableName
-        tvTableCapacity.text = "$minPlayers - $maxPlayers คน"
+        // =========================
+        // ข้อมูลโต๊ะ
+        // =========================
 
+        tvTableName.text =
+            tableName
+
+        tvTableCapacity.text =
+            "$minPlayers - $maxPlayers คน"
+
+        // =========================
         // โต๊ะถูกจองแล้ว
+        // =========================
+
         if (booked) {
 
             tableItem.setBackgroundResource(
@@ -250,23 +323,32 @@ class Booking1_2Fragment : Fragment() {
 
         } else {
 
+            // =========================
             // ตรวจจำนวนผู้เล่น
+            // =========================
+
             val canSelect =
                 playerCount in minPlayers..maxPlayers
 
             if (!canSelect) {
 
-                // คนไม่ตรงกับจำนวนที่โต๊ะรองรับ
+                // จำนวนผู้เล่นไม่ตรงกับโต๊ะ
                 tableItem.alpha = 0.35f
                 tableItem.isClickable = false
                 tableItem.isEnabled = false
 
             } else {
 
+                // =========================
                 // โต๊ะว่างและเลือกได้
+                // =========================
+
                 tableItem.setOnClickListener {
 
-                    // ถ้ากดโต๊ะเดิมที่เลือกอยู่ → ยกเลิก
+                    // -------------------------
+                    // กดโต๊ะเดิม = ยกเลิก
+                    // -------------------------
+
                     if (selectedTable == tableItem) {
 
                         tableItem.setBackgroundResource(
@@ -277,22 +359,36 @@ class Booking1_2Fragment : Fragment() {
 
                     } else {
 
-                        // คืนสีโต๊ะเก่ากลับเป็นว่าง
-                        selectedTable?.setBackgroundResource(
-                            R.drawable.bg_status_available
-                        )
+                        // -------------------------
+                        // คืนโต๊ะเก่า
+                        // -------------------------
 
+                        selectedTable
+                            ?.setBackgroundResource(
+                                R.drawable.bg_status_available
+                            )
+
+                        // -------------------------
                         // เลือกโต๊ะใหม่
+                        // -------------------------
+
                         tableItem.setBackgroundResource(
                             R.drawable.bg_status_selected
                         )
 
-                        selectedTable = tableItem
+                        selectedTable =
+                            tableItem
                     }
                 }
             }
         }
 
-        container.addView(tableView)
+        // =========================
+        // เพิ่มโต๊ะเข้า Container
+        // =========================
+
+        container.addView(
+            tableView
+        )
     }
 }

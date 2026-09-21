@@ -58,11 +58,6 @@
         android:label="Booking 1.3" />
 
     <fragment
-        android:id="@+id/booking1_3GameDetailFragment"
-        android:name="com.diceplanet.app.ui.booking.Booking1_3GameDetailFragment"
-        android:label="Booking 1.3.1" />
-
-    <fragment
         android:id="@+id/booking1_4Fragment"
         android:name="com.diceplanet.app.ui.booking.Booking1_4Fragment"
         android:label="Booking 1.4" />

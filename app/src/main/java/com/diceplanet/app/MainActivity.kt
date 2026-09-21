@@ -1,16 +1,27 @@
 package com.diceplanet.app
 
+import android.content.Context
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 // หน้าหลักของแอป ใช้ควบคุมการเปลี่ยนหน้าและ Bottom Navigation
 class MainActivity : AppCompatActivity() {
+    override fun onCreate(
+        savedInstanceState: Bundle?,
+        persistentState: PersistableBundle?
+    ) {
+        super.onCreate(savedInstanceState, persistentState)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase)
+    }
 
     private lateinit var navController: NavController
     private lateinit var bottomNavigation: BottomNavigationView
@@ -179,7 +190,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.booking1_1Fragment,
                 R.id.booking1_2Fragment,
                 R.id.booking1_3Fragment,
-                R.id.booking1_3GameDetailFragment,
                 R.id.booking1_4Fragment,
                 R.id.booking1_5Fragment -> {
 

@@ -4,10 +4,20 @@ import kotlin.random.Random
 
 object BookingManager {
 
+    // =========================================================
+    // Booking ปัจจุบัน
+    // =========================================================
+
     var currentBooking: BookingData? = null
         private set
 
-    private val usedBookingIds = mutableSetOf<String>()
+    // เก็บ Booking ID ที่เคยสร้างใน Session นี้
+    private val usedBookingIds =
+        mutableSetOf<String>()
+
+    // =========================================================
+    // สร้าง Booking
+    // =========================================================
 
     fun createBooking(
         selectedDate: String,
@@ -17,47 +27,81 @@ object BookingManager {
         playerCount: Int,
         gameName: String,
         contactName: String,
-        contactPhone: String
+        contactPhone: String,
+        playMode: String
     ): BookingData {
 
-        val bookingId = generateBookingId()
+        // สร้าง Booking ID
+        val bookingId =
+            generateBookingId()
 
-        val booking = BookingData(
-            bookingId = bookingId,
-            selectedDate = selectedDate,
-            startTime = startTime,
-            endTime = endTime,
-            selectedTable = selectedTable,
-            playerCount = playerCount,
-            gameName = gameName,
-            contactName = contactName,
-            contactPhone = contactPhone,
-            status = "รอการยืนยัน"
-        )
+        // สร้างข้อมูล Booking
+        val booking =
+            BookingData(
+                bookingId = bookingId,
+                selectedDate = selectedDate,
+                startTime = startTime,
+                endTime = endTime,
+                selectedTable = selectedTable,
+                playerCount = playerCount,
+                gameName = gameName,
+                contactName = contactName,
+                contactPhone = contactPhone,
+                playMode = playMode,
+                status = "รอการยืนยัน"
+            )
 
-        currentBooking = booking
+        // เก็บ Booking ปัจจุบัน
+        currentBooking =
+            booking
 
         return booking
     }
+
+    // =========================================================
+    // สร้าง Booking ID
+    // =========================================================
 
     private fun generateBookingId(): String {
 
         var number: String
 
         do {
-            number = buildString {
-                repeat(11) {
-                    append(Random.nextInt(0, 10))
-                }
-            }
-        } while (usedBookingIds.contains(number))
 
-        usedBookingIds.add(number)
+            number =
+                buildString {
+
+                    repeat(11) {
+
+                        append(
+                            Random.nextInt(
+                                0,
+                                10
+                            )
+                        )
+                    }
+                }
+
+        } while (
+            usedBookingIds.contains(
+                number
+            )
+        )
+
+        usedBookingIds.add(
+            number
+        )
 
         return "#DP$number"
     }
 
+    // =========================================================
+    // ล้าง Booking ปัจจุบัน
+    // =========================================================
+
     fun clearCurrentBooking() {
-        currentBooking = null
+
+        currentBooking =
+            null
     }
 }

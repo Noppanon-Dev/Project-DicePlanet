@@ -10,5 +10,6 @@ data class BookingData(
     val gameName: String,
     val contactName: String,
     val contactPhone: String,
+    val playMode: String = "hourly",
     var status: String = "รอการยืนยัน"
 )
