@@ -22,7 +22,7 @@ object BoardGameData {
                 "ตีความภาพและเรื่องราว พร้อมค้นหาคำใบ้เพื่อร่วมโต๊ะเดียวกัน",
             imageResId =
                 R.drawable.dixit,
-            popularity = 100,
+            popularity = 7.18,
             isNew = false
         ),
 
@@ -42,7 +42,7 @@ object BoardGameData {
                 "สร้างถนนและเมือง แลกเปลี่ยนทรัพยากรเพื่อพัฒนาอาณาจักรของคุณ",
             imageResId =
                 R.drawable.catan,
-            popularity = 90,
+            popularity = 7.09,
             isNew = false
         ),
 
@@ -62,7 +62,7 @@ object BoardGameData {
                 "เลือกกระเบื้องและจัดวางให้สวยงามเพื่อทำคะแนนให้ได้มากที่สุด",
             imageResId =
                 R.drawable.azul,
-            popularity = 80,
+            popularity = 7.71,
             isNew = true
         ),
 
@@ -82,7 +82,7 @@ object BoardGameData {
                 "สะสมนกและสร้างแหล่งที่อยู่อาศัยเพื่อทำคะแนน",
             imageResId =
                 R.drawable.wingspan,
-            popularity = 95,
+            popularity = 7.99,
             isNew = false
         ),
 
@@ -101,7 +101,7 @@ object BoardGameData {
                 "สร้างเส้นทางรถไฟเชื่อมเมืองต่าง ๆ เพื่อทำภารกิจและเก็บคะแนน",
             imageResId =
                 R.drawable.ticket_to_ride,
-            popularity = 94,
+            popularity = 7.38,
             isNew = false
         ),
 
@@ -120,7 +120,7 @@ object BoardGameData {
                 "ร่วมมือกันหยุดการแพร่ระบาดและค้นหาวิธีรักษาโรคทั่วโลก",
             imageResId =
                 R.drawable.pandemic,
-            popularity = 92,
+            popularity = 7.51,
             isNew = false
         ),
 
@@ -139,7 +139,7 @@ object BoardGameData {
                 "วางแผ่นดินเพื่อสร้างเมือง ถนน และพื้นที่ต่าง ๆ พร้อมสะสมคะแนน",
             imageResId =
                 R.drawable.carcassonne,
-            popularity = 88,
+            popularity = 7.42,
             isNew = false
         ),
 
@@ -159,7 +159,7 @@ object BoardGameData {
                 "พัฒนาอารยธรรมและสร้างสิ่งมหัศจรรย์เพื่อสร้างเมืองที่ยิ่งใหญ่",
             imageResId =
                 R.drawable.seven_wonders,
-            popularity = 91,
+            popularity = 7.66,
             isNew = false
         ),
 
@@ -178,7 +178,7 @@ object BoardGameData {
                 "สะสมอัญมณี ซื้อกิจการ และดึงดูดขุนนางเพื่อทำคะแนน",
             imageResId =
                 R.drawable.splendor,
-            popularity = 89,
+            popularity = 7.42,
             isNew = false
         ),
 
@@ -197,7 +197,7 @@ object BoardGameData {
                 "บริหารทรัพยากรและพัฒนาดาวอังคารให้สามารถอยู่อาศัยได้",
             imageResId =
                 R.drawable.terraforming_mars,
-            popularity = 98,
+            popularity = 8.33,
             isNew = false
         ),
 
@@ -215,7 +215,7 @@ object BoardGameData {
                 "ให้คำใบ้เพื่อช่วยทีมค้นหาสายลับของตัวเอง",
             imageResId =
                 R.drawable.codenames,
-            popularity = 87,
+            popularity = 7.52,
             isNew = false
         ),
 
@@ -234,7 +234,7 @@ object BoardGameData {
                 "เลือกการ์ดอาหารญี่ปุ่นและสะสมชุดอาหารเพื่อทำคะแนน",
             imageResId =
                 R.drawable.sushi_go,
-            popularity = 84,
+            popularity = 6.98,
             isNew = false
         ),
 
@@ -253,7 +253,7 @@ object BoardGameData {
                 "สวมบทสัตว์ประหลาดและต่อสู้เพื่อยึดครองเมืองโตเกียว",
             imageResId =
                 R.drawable.king_of_tokyo,
-            popularity = 86,
+            popularity = 7.11,
             isNew = false
         ),
 
@@ -272,7 +272,7 @@ object BoardGameData {
                 "นำฝ่ายของคุณต่อสู้เพื่อควบคุมป่าและบรรลุเป้าหมาย",
             imageResId =
                 R.drawable.root,
-            popularity = 96,
+            popularity = 8.07,
             isNew = false
         ),
 
@@ -291,7 +291,7 @@ object BoardGameData {
                 "สุ่มส่วนผสมลงหม้อและตัดสินใจว่าจะเสี่ยงต่อหรือหยุด",
             imageResId =
                 R.drawable.quacks_of_quedlinburg,
-            popularity = 83,
+            popularity = 7.80,
             isNew = false
         ),
 
@@ -311,7 +311,7 @@ object BoardGameData {
                 "สร้างเมืองในป่าและรวบรวมสิ่งมีชีวิตเพื่อพัฒนาอาณาจักร",
             imageResId =
                 R.drawable.everdell,
-            popularity = 93,
+            popularity = 7.97,
             isNew = false
         ),
 
@@ -330,7 +330,7 @@ object BoardGameData {
                 "วางแผนการเมืองและสงครามเพื่อสร้างอำนาจบนดาวอาร์ราคิส",
             imageResId =
                 R.drawable.dune_imperium,
-            popularity = 97,
+            popularity = 8.41,
             isNew = false
         ),
 
@@ -349,7 +349,7 @@ object BoardGameData {
                 "ค้นหามนุษย์หมาป่าที่ซ่อนตัวอยู่ในหมู่ผู้เล่น",
             imageResId =
                 R.drawable.werewolf,
-            popularity = 85,
+            popularity = 6.98,
             isNew = false
         ),
 
@@ -368,7 +368,7 @@ object BoardGameData {
                 "จับคู่สีหรือตัวเลขและใช้การ์ดพิเศษเพื่อกำจัดการ์ดในมือ",
             imageResId =
                 R.drawable.uno,
-            popularity = 97,
+            popularity = 5.49,
             isNew = false
         ),
 
@@ -388,7 +388,7 @@ object BoardGameData {
                 "ออกผจญภัย ต่อสู้กับศัตรู และพัฒนาตัวละครผ่านภารกิจต่าง ๆ",
             imageResId =
                 R.drawable.gloomhaven,
-            popularity = 99,
+            popularity = 8.53,
             isNew = false
         )
     )

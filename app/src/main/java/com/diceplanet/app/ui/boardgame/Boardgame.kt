@@ -7,6 +7,6 @@ data class BoardGame(
     val playTime: String,
     val description: String,
     val imageResId: Int,
-    val popularity: Int,
+    val popularity: Double,
     val isNew: Boolean
 )
