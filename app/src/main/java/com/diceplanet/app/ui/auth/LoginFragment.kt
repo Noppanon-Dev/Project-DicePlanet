@@ -2,6 +2,7 @@ package com.diceplanet.app.ui.auth
 
 import android.os.Bundle
 import android.text.InputType
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +15,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.diceplanet.app.R
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
 
@@ -26,6 +29,9 @@ class LoginFragment : Fragment() {
     private lateinit var loginScrollView: NestedScrollView
 
     private var isPasswordVisible = false
+
+    // Firebase
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +51,9 @@ class LoginFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize Firebase
+        auth = FirebaseAuth.getInstance()
+
         etEmail = view.findViewById(R.id.etEmail)
         etPassword = view.findViewById(R.id.etPassword)
         btnShowPassword = view.findViewById(R.id.btnShowPassword)
@@ -52,7 +61,9 @@ class LoginFragment : Fragment() {
         loginScrollView = view.findViewById(R.id.loginScrollView)
 
         // จัดการพื้นที่เมื่อคีย์บอร์ดเปิด
-        ViewCompat.setOnApplyWindowInsetsListener(loginScrollView) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(
+            loginScrollView
+        ) { v, insets ->
 
             val imeInsets = insets.getInsets(
                 WindowInsetsCompat.Type.ime()
@@ -102,9 +113,10 @@ class LoginFragment : Fragment() {
         }
 
         // ปุ่มย้อนกลับ
-        view.findViewById<ImageButton>(R.id.btnBack).setOnClickListener {
-            findNavController().navigateUp()
-        }
+        view.findViewById<ImageButton>(R.id.btnBack)
+            .setOnClickListener {
+                findNavController().navigateUp()
+            }
 
         // แสดง / ซ่อน Password
         btnShowPassword.setOnClickListener {
@@ -137,45 +149,149 @@ class LoginFragment : Fragment() {
             )
         }
 
-        // ลืมรหัสผ่าน - Dummy
+        // ลืมรหัสผ่าน
         view.findViewById<TextView>(R.id.tvForgotPassword)
             .setOnClickListener {
 
-                Toast.makeText(
-                    requireContext(),
-                    "ฟังก์ชันลืมรหัสผ่านยังไม่เปิดใช้งาน",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-        // เข้าสู่ระบบ - Dummy
-        view.findViewById<View>(R.id.btnLogin)
-            .setOnClickListener {
-
                 val email = etEmail.text.toString().trim()
-                val password = etPassword.text.toString()
 
                 if (email.isEmpty()) {
-                    etEmail.error = "กรุณากรอก Email"
+                    etEmail.error = "กรุณากรอก Email ก่อน"
                     return@setOnClickListener
                 }
 
-                if (password.isEmpty()) {
-                    etPassword.error = "กรุณากรอก Password"
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    etEmail.error = "รูปแบบ Email ไม่ถูกต้อง"
                     return@setOnClickListener
                 }
 
-                Toast.makeText(
-                    requireContext(),
-                    "ระบบ Login จะเชื่อมต่อ Backend ภายหลัง",
-                    Toast.LENGTH_SHORT
-                ).show()
+                resetPassword(email)
             }
+
+        // เข้าสู่ระบบ
+        val btnLogin = view.findViewById<View>(R.id.btnLogin)
+
+        btnLogin.setOnClickListener {
+
+            val email = etEmail.text.toString().trim()
+            val password = etPassword.text.toString()
+
+            if (email.isEmpty()) {
+                etEmail.error = "กรุณากรอก Email"
+                return@setOnClickListener
+            }
+
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                etEmail.error = "รูปแบบ Email ไม่ถูกต้อง"
+                return@setOnClickListener
+            }
+
+            if (password.isEmpty()) {
+                etPassword.error = "กรุณากรอก Password"
+                return@setOnClickListener
+            }
+
+            // เริ่ม Login
+            btnLogin.isEnabled = false
+
+            loginWithFirebase(
+                email,
+                password,
+                btnLogin
+            )
+        }
 
         // สมัครสมาชิก
         view.findViewById<TextView>(R.id.tvRegister)
             .setOnClickListener {
-                findNavController().navigate(R.id.registerFragment)
+                findNavController().navigate(
+                    R.id.registerFragment
+                )
             }
+    }
+
+    // Login ด้วย Firebase Authentication
+    private fun loginWithFirebase(
+        email: String,
+        password: String,
+        btnLogin: View
+    ) {
+
+        auth.signInWithEmailAndPassword(
+            email,
+            password
+        ).addOnCompleteListener { task ->
+
+            btnLogin.isEnabled = true
+
+            if (task.isSuccessful) {
+
+                showToast("เข้าสู่ระบบสำเร็จ")
+
+                // กลับไปหน้า Home และล้างหน้าที่อยู่ด้านบน
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(
+                        R.id.homeFragment,
+                        false
+                    )
+                    .setLaunchSingleTop(true)
+                    .build()
+
+                if (isAdded &&
+                    findNavController().currentDestination?.id == R.id.loginFragment
+                ) {
+                    findNavController().navigate(
+                        R.id.homeFragment,
+                        null,
+                        navOptions
+                    )
+                }
+
+            } else {
+
+                val errorMessage =
+                    task.exception?.localizedMessage
+                        ?: "ไม่สามารถเข้าสู่ระบบได้"
+
+                showToast(
+                    "เข้าสู่ระบบไม่สำเร็จ: $errorMessage"
+                )
+            }
+        }
+    }
+
+    // ส่ง Email สำหรับรีเซ็ตรหัสผ่าน
+    private fun resetPassword(email: String) {
+
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+
+                if (task.isSuccessful) {
+
+                    showToast(
+                        "ส่งลิงก์รีเซ็ตรหัสผ่านไปยัง Email แล้ว"
+                    )
+
+                } else {
+
+                    val errorMessage =
+                        task.exception?.localizedMessage
+                            ?: "ไม่สามารถส่ง Email ได้"
+
+                    showToast(
+                        "ส่ง Email ไม่สำเร็จ: $errorMessage"
+                    )
+                }
+            }
+    }
+
+    private fun showToast(message: String) {
+        context?.let {
+            Toast.makeText(
+                it,
+                message,
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 }
