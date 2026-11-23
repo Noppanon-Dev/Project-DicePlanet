@@ -1,3 +1,4 @@
+
 package com.diceplanet.app.ui.auth
 
 import android.os.Bundle
@@ -342,18 +343,48 @@ class RegisterFragment : Fragment() {
                                 .setValue(email)
                                 .addOnCompleteListener { emailTask ->
 
-                                    btnRegister.isEnabled = true
-
                                     if (emailTask.isSuccessful) {
 
-                                        showToast(
-                                            "สมัครสมาชิกสำเร็จ"
-                                        )
+                                        // กำหนด Role เริ่มต้นเป็น Member
+                                        database.child("roles")
+                                            .child(uid)
+                                            .setValue("member")
+                                            .addOnCompleteListener { roleTask ->
+
+                                                btnRegister.isEnabled = true
+
+                                                if (roleTask.isSuccessful) {
+
+                                                    showToast("สมัครสมาชิกสำเร็จ")
+
+                                                    // กลับไปหน้า Home และนำหน้า Register ออกจาก Back Stack
+                                                    val navOptions = androidx.navigation.NavOptions.Builder()
+                                                        .setPopUpTo(R.id.homeFragment, false)
+                                                        .setLaunchSingleTop(true)
+                                                        .build()
+
+                                                    findNavController().navigate(
+                                                        R.id.homeFragment,
+                                                        null,
+                                                        navOptions
+                                                    )
+
+                                                } else {
+
+                                                    showToast(
+                                                        "บันทึกข้อมูลแล้ว แต่กำหนด Role ไม่สำเร็จ: " +
+                                                                (roleTask.exception?.localizedMessage
+                                                                    ?: "Unknown error")
+                                                    )
+                                                }
+                                            }
 
                                     } else {
 
+                                        btnRegister.isEnabled = true
+
                                         showToast(
-                                            "สร้างบัญชีสำเร็จ แต่บันทึก Email ไม่สำเร็จ: " +
+                                            "บันทึก Username แล้ว แต่บันทึก Email ไม่สำเร็จ: " +
                                                     (emailTask.exception?.localizedMessage
                                                         ?: "Unknown error")
                                         )
@@ -365,7 +396,7 @@ class RegisterFragment : Fragment() {
                             btnRegister.isEnabled = true
 
                             showToast(
-                                "สร้างบัญชีสำเร็จ แต่บันทึก Username ไม่สำเร็จ: " +
+                                "บันทึก Username ไม่สำเร็จ: " +
                                         (usernameTask.exception?.localizedMessage
                                             ?: "Unknown error")
                             )
