@@ -1,4 +1,3 @@
-
 package com.diceplanet.app
 
 import android.os.Bundle
@@ -9,48 +8,52 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import com.diceplanet.app.auth.RoleManager
-import com.diceplanet.app.auth.UserRole
+import com.diceplanet.app.ui.auth.RoleManager
+import com.diceplanet.app.ui.auth.UserRole
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 // หน้าหลักของแอป ใช้ควบคุมการเปลี่ยนหน้าและ Bottom Navigation
 class MainActivity : AppCompatActivity() {
 
+    // ตัวควบคุมการเปลี่ยนหน้าในแอป
     private lateinit var navController: NavController
+
+    // ตัวควบคุมเมนูด้านล่างของแอป
     private lateinit var bottomNavigation: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // แสดง Layout ของหน้า Main
+        // แสดง Layout หลักของแอป
         setContentView(R.layout.activity_main)
 
-        // ตั้งค่าสีของ Status Bar
+        // กำหนดไอคอน Status Bar ให้เป็นสีเข้ม
         WindowInsetsControllerCompat(
             window,
             window.decorView
         ).isAppearanceLightStatusBars = true
 
-        // หา Navigation Host
+        // ค้นหา Navigation Host จาก Layout
         val navHostFragment =
             supportFragmentManager.findFragmentById(
                 R.id.nav_host_fragment
             ) as NavHostFragment
 
-        // ตัวควบคุม Navigation
+        // เชื่อมต่อ NavController เพื่อควบคุมการเปลี่ยนหน้า
         navController = navHostFragment.navController
 
-        // หา Bottom Navigation
+        // เชื่อมต่อ Bottom Navigation จาก Layout
         bottomNavigation = findViewById(R.id.bottom_navigation)
 
-        // =========================
+        // ==========================================
         // Bottom Navigation
-        // =========================
+        // ==========================================
+
+        // ตรวจสอบเมื่อผู้ใช้กดเลือกเมนูด้านล่าง
         bottomNavigation.setOnItemSelectedListener { item ->
 
             when (item.itemId) {
 
-                // Home
                 R.id.homeFragment -> {
                     navController.navigate(
                         R.id.homeFragment,
@@ -66,40 +69,35 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                // Board Game
                 R.id.boardgameFragment -> {
                     navigateTo(R.id.boardgameFragment)
                     true
                 }
 
-                // Booking (ต้อง Login ก่อน)
                 R.id.bookingFragment -> {
                     openProtectedDestination(R.id.bookingFragment)
                     true
                 }
 
-                // Member (ต้อง Login ก่อน)
                 R.id.memberFragment -> {
                     openProtectedDestination(R.id.memberFragment)
                     true
                 }
 
-                // Profile
                 R.id.profileFragment -> {
                     navigateTo(R.id.profileFragment)
                     true
                 }
 
-                else -> false
+             else -> false
             }
         }
 
-        // =========================
-        // ตรวจสอบ Destination
-        // =========================
+        // ตรวจสอบ Destination เมื่อมีการเปลี่ยนหน้า
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
-            // ซ่อน Bottom Navigation ในหน้า Login / Register
+            // ซ่อน Bottom Navigation ในหน้า Login และ Register
             if (
                 destination.id == R.id.loginFragment ||
                 destination.id == R.id.registerFragment
@@ -109,17 +107,15 @@ class MainActivity : AppCompatActivity() {
                 bottomNavigation.visibility = View.VISIBLE
             }
 
-            // กำหนดปุ่มที่ถูกเลือก
+            // กำหนดสถานะเมนูให้ตรงกับหน้าที่กำลังเปิดอยู่
             when (destination.id) {
 
-                // Home
                 R.id.homeFragment -> {
                     bottomNavigation.menu
                         .findItem(R.id.homeFragment)
                         .isChecked = true
                 }
 
-                // Board Game
                 R.id.boardgameFragment,
                 R.id.boardgameDetailFragment -> {
                     bottomNavigation.menu
@@ -127,7 +123,6 @@ class MainActivity : AppCompatActivity() {
                         .isChecked = true
                 }
 
-                // Booking
                 R.id.bookingFragment,
                 R.id.booking1_1Fragment,
                 R.id.booking1_2Fragment,
@@ -139,7 +134,6 @@ class MainActivity : AppCompatActivity() {
                         .isChecked = true
                 }
 
-                // Member
                 R.id.memberFragment,
                 R.id.privilegeFragment -> {
                     bottomNavigation.menu
@@ -147,7 +141,6 @@ class MainActivity : AppCompatActivity() {
                         .isChecked = true
                 }
 
-                // Profile
                 R.id.profileFragment -> {
                     bottomNavigation.menu
                         .findItem(R.id.profileFragment)
@@ -158,11 +151,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     // เปลี่ยนหน้าแบบปกติ
+
+    // รับ ID ของหน้าที่ต้องการเปิด แล้วสั่งให้ NavController เปลี่ยนหน้า
     private fun navigateTo(destinationId: Int) {
+
+        // ตรวจสอบว่าปัจจุบันอยู่หน้าเดิมหรือไม่
+        // ถ้าอยู่หน้าเดิมแล้ว ไม่ต้องเปลี่ยนหน้าอีก
         if (navController.currentDestination?.id == destinationId) {
             return
         }
 
+        // เปลี่ยนไปยังหน้าที่กำหนด
         navController.navigate(
             destinationId,
             null,
@@ -172,19 +171,26 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    // ตรวจสอบสิทธิ์ก่อนเข้า Booking / Member
+    // ตรวจสอบสิทธิ์ผู้ใช้จาก Firebase
+
+    // ตรวจสอบ Role ก่อนอนุญาตให้เข้า Booking หรือ Member
     private fun openProtectedDestination(destinationId: Int) {
 
+        // เรียก RoleManager ให้ตรวจสอบ Role ของผู้ใช้จาก Firebase
         RoleManager.getCurrentRole { role ->
 
+            // ตรวจสอบว่า Activity ยังทำงานอยู่หรือไม่
             if (isFinishing || isDestroyed) {
                 return@getCurrentRole
             }
 
+            // ตรวจสอบผลลัพธ์ Role ที่ได้รับกลับมาจาก RoleManager
             when (role) {
 
-                // Guest ต้อง Login ก่อน
+                // กรณีผู้ใช้ยังไม่ได้ Login
                 UserRole.GUEST -> {
+
+                    // ถ้ายังไม่ได้อยู่หน้า Login ให้เปลี่ยนไปหน้า Login
                     if (navController.currentDestination?.id != R.id.loginFragment) {
                         navController.navigate(
                             R.id.loginFragment,
@@ -196,14 +202,17 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                // Member และ Staff เข้าได้
+                // กรณีเป็น Member หรือ Staff
+                // อนุญาตให้เข้า Booking และ Member ได้
                 UserRole.MEMBER,
                 UserRole.STAFF -> {
                     navigateTo(destinationId)
                 }
 
-                // ไม่พบ Role หรือเกิดข้อผิดพลาด
+                // กรณีไม่สามารถตรวจสอบ Role ได้
                 UserRole.UNKNOWN -> {
+
+                    // แจ้งเตือนผู้ใช้และไม่อนุญาตให้เข้าไปยังหน้าปลายทาง
                     Toast.makeText(
                         this,
                         "ไม่สามารถตรวจสอบสิทธิ์ผู้ใช้ได้",
